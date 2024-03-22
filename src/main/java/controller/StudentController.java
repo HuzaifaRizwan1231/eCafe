@@ -13,7 +13,7 @@ public class StudentController {
     private studentRepository srepo;
 
 
-    @GetMapping("/")
+    @GetMapping("/student")
     public List<Student> getAllStudents(){
         List<Student> list = (List<Student>)this.srepo.findAll();
         return list; 
