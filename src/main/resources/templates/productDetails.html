@@ -15,7 +15,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" th:href="@{images/favicon.png}" type="" />
 
-  <title>eCafé</title>
+  <title>Product Detail</title>
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.css}" />
@@ -41,34 +41,64 @@
   <!-- responsive style -->
   <link th:href="@{/css/responsive.css}" rel="stylesheet" />
 
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 </head>
 
 <body>
-<div class="hero_area">
-  <div class="bg-box">
-    <img th:src="@{/hero-bg.jpg}" alt="" />
-  </div>
   <!-- header section strats -->
-  <div th:replace="navbar :: navbar"></div>
+  <section style="background-color: #0d0e10 !important;">
+    <div th:replace="navbar :: navbar" ></div>
+</section>
   <!-- end header section -->
-  <!-- slider section -->
-  <div th:replace="slider :: slider"></div>
-  <!-- end slider section -->
-</div>
 
-<!-- menu section start -->
-<div class="container mt-2">
-  <div class="heading_container heading_center mb-4" style="margin-top: 5rem;">
-  <h2>Our Menu</h2>
-</div>
-  <div class="row">
-    <div th:each="product : ${products}">
-      <div th:replace="foodCard :: foodCard"></div>
-    </div>
-  </div>
-</div>
-<!-- menu section end -->
+    <!-- product details section start -->
+	
+	<div class="container">
+		<div class="product-details-card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-6">
+						
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img src="/src/main/resources/static/images/f2.png" /></div>
+						  <div class="tab-pane" id="pic-2"><img src="images/f2.png" /></div>
+						  <div class="tab-pane" id="pic-3"><img src="images/f2.png" /></div>
+						  <div class="tab-pane" id="pic-4"><img src="images/f2.png" /></div>
+						  <div class="tab-pane" id="pic-5"><img src="images/f2.png" /></div>
+						</div>
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="images/f4.png" /></a></li>
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="images/f2.png" /></a></li>
+						  <li><a data-target="#pic-3" data-toggle="tab"><img src="images/f2.png" /></a></li>
+						  <li><a data-target="#pic-4" data-toggle="tab"><img src="images/f2.png" /></a></li>
+						  <li><a data-target="#pic-5" data-toggle="tab"><img src="images/f2.png" /></a></li>
+						</ul>
+						
+					</div>
+					<div class="details col-md-6">
+						<h3 th:text="${product.Name}" class="product-title "></h3>
+						
+						<p th:text="${product.description}" class="product-description"></p>
+						<h4 class="price">price: <span th:text="'Rs. ' + ${product.price}"> </span></h4>
+						
+						
+						<div class="action">
+                            <button class="like btn btn-default" type="button">Order Now</button>
+							<button class="add-to-cart btn btn-default" type="button">add to cart</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+    <!-- product details section end-->
+
+
 
 <!-- jQery -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
