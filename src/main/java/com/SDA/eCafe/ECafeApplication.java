@@ -10,9 +10,9 @@ public class ECafeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ECafeApplication.class, args);
 	}
-    
-	@GetMapping("/")
+
+	/*@GetMapping("/")
     public String home() {
         return "index";
-    }
+    }*/
 }
