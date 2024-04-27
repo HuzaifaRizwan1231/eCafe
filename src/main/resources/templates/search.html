@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" type="" />
+
+    <title>eCafé</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="hero_area">
+      <div class="bg-box">
+        <img th:src="@{/hero-bg.jpg}" alt="" />
+      </div>
+      <!-- header section strats -->
+      <!-- end header section -->
+      <div th:replace="navbar :: navbar"></div>
+      <!-- slider section -->
+      <div th:replace="slider :: slider"></div>
+      <!-- end slider section -->
+    </div>
+
+    <!-- menu section start -->
+    <div class="container mt-2">
+      <div
+        class="heading_container heading_center mb-4"
+        style="margin-top: 5rem"
+      >
+        <h2>Search Results for</h2>
+        <h2 th:text="${query}"></h2>
+      </div>
+      <!-- apply filter modal start -->
+      <div class="container mt-5">
+        <button
+          type="button"
+          class="btn"
+          data-toggle="modal"
+          data-target="#filterModal"
+          style="background-color: #ffbe33; color: white"
+        >
+          <!-- <i class="bi bi-filter"></i> Filter -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-filter"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"
+            />
+          </svg>
+          Filter
+        </button>
+
+        <!-- Filter Modal Start-->
+        <div
+          class="modal"
+          id="filterModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="filterModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="filterModalLabel">
+                  Filter Products
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Change action to the search endpoint and method to GET -->
+                <form action="/products/search" method="get">
+                  <!-- Hidden input to pass the query parameter -->
+                  <input type="hidden" name="query" th:value="${query}" />
+                  <div class="form-group">
+                    <label for="priceFrom">Price From:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="priceFrom"
+                      name="minPrice"
+                      placeholder="Enter minimum price"
+                      min="0"
+                      max="100000"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="priceTo">Price To:</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="priceTo"
+                      name="maxPrice"
+                      placeholder="Enter maximum price"
+                      min="0"
+                      max="100000"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="background-color: #ffbe33; color: white"
+                  >
+                    Apply Filter
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fiter Modal End -->
+      </div>
+      <!-- apply filter modal end -->
+
+      <div class="row">
+        <div th:each="product : ${products}">
+          <!-- card start -->
+          <div class="card m-2" style="width: 22rem; border-radius: 1rem">
+            <div
+              class="d-flex justify-content-center p-auto py-2 bg"
+              style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0"
+            >
+              <img
+                src="/images/f2.png"
+                class="card-img-top img-fluid w-50 my-2"
+                alt="..."
+              />
+            </div>
+            <div
+              class="card-body text-light"
+              style="background-color: #222831; border-radius: 0 0 1rem 1rem"
+            >
+              <h5 class="card-title" th:text="${product.Name}"></h5>
+              <p class="card-text" th:text="${product.Description}"></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span th:text="'Rs. ' + ${product.price}"></span>
+                <div class="bg-warning rounded-circle p-2 cursor-pointer">
+                  <img
+                    src="/images/cart.png"
+                    style="width: 2rem"
+                    class="cartBtn"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- card end -->
+        </div>
+      </div>
+    </div>
+    <!-- menu section end -->
+
+    <!-- jQery -->
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <!-- popper js -->
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap js -->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <!-- owl slider -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+    ></script>
+    <!-- isotope js -->
+    <script
+      th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
+    ></script>
+    <!-- nice select -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+    ></script>
+    <!-- custom js -->
+    <script th:src="@{/js/custom.js}"></script>
+    <!-- Google Map -->
+    <script
+      th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
+    ></script>
+    <!-- End Google Map -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
