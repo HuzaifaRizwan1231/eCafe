@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .product-details {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 80%;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .product-image {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .product-details-text {
+            flex: 2;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff5722;
+            margin-bottom: 20px;
+        }
+
+        .quantity-adjust {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-to-cart {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .buy-now {
+            background-color: #ff5722;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="product-details">
+        <div class="product-image">
+            <img src="path_to_product_image.jpg" alt="Product Image" style="width: 100%;">
+        </div>
+        <div class="product-details-text">
+            <div class="product-name">Product Name</div>
+            <div class="product-description">Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</div>
+            <div class="product-price">$99.99</div>
+            <div class="quantity-adjust">
+                <span>Quantity:</span>
+                <input type="number" class="quantity-input" value="1">
+            </div>
+            <div class="buttons">
+                <button class="button add-to-cart">Add to Cart</button>
+                <button class="button buy-now">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
