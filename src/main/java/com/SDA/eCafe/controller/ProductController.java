@@ -9,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.*;
 
 //@RestController
 @Controller
@@ -32,8 +33,82 @@ public class ProductController {
             System.out.println(products);
             model.addAttribute("products", products);
             return "index";
-        }catch(Exception error){
+        } catch (Exception error) {
             return "error";
         }
     }
+
+    @GetMapping("/products/search")
+    public String searchAndFilterProducts(@RequestParam(value = "query", required = false) String query,
+            @RequestParam(value = "minPrice", required = false) Integer minPrice,
+            @RequestParam(value = "maxPrice", required = false) Integer maxPrice,
+            Model model) {
+        try {
+            List<Product> filteredProducts;
+
+            // Check if a search query is provided
+            if (query != null && !query.isEmpty()) {
+                // Perform search based on the query
+                String[] keywords = query.split("\\s+");
+                Set<Product> uniqueProducts = new HashSet<>();
+                for (String keyword : keywords) {
+                    List<Product> products = productRepository.findProductsByKeywordIgnoreCase(keyword);
+                    uniqueProducts.addAll(products);
+                }
+                filteredProducts = new ArrayList<>(uniqueProducts);
+            } else {
+                // If no search query is provided, fetch all products
+                filteredProducts = productRepository.findAll();
+            }
+
+            // Apply filter if minPrice and maxPrice parameters are provided
+            if (minPrice != null && maxPrice != null) {
+                // if minPrice and maxPrice has invalid value
+                if (minPrice > maxPrice || minPrice < 0) {
+                    throw new IllegalArgumentException("Invalid price range: minPrice cannot be greater than maxPrice");
+                }
+                // Filter products based on price range
+                filteredProducts = filterProductsByPrice(filteredProducts, minPrice, maxPrice);
+            }
+
+            // Add filtered products to the model
+            model.addAttribute("products", filteredProducts);
+            model.addAttribute("query", query);
+
+            // Return the view name
+            return "search";
+        } catch (Exception error) {
+            // Handle any exceptions
+            return "error";
+        }
+    }
+
+    // Helper method to filter products by price range
+    private List<Product> filterProductsByPrice(List<Product> products, int minPrice, int maxPrice) {
+        List<Product> filteredProducts = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getPrice() >= minPrice && product.getPrice() <= maxPrice) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
+    }
+
+    @GetMapping("/productDetail")
+    public String getProductDetail(@RequestParam("id") Integer id, Model model) {
+        try {
+            Optional<Product> optionalProduct = productRepository.findById(id);
+            if (optionalProduct.isPresent()) {
+                Product product = optionalProduct.get();
+                model.addAttribute("product", product);
+                return "productDetail";
+            } else {
+                return "error";
+            }
+        } catch (Exception error) {
+            return "error";
+        }
+    }
+
+
 }

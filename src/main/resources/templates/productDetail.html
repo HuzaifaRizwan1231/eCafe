@@ -1,110 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" th:href="@{images/favicon.png}" type="" />
+    <title>eCafé</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+      rel="stylesheet"
+    />
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
     <style>
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+      body {
+        font-family: "open sans";
+        overflow-x: hidden;
+        background-color: #f8f9fa;
+      }
 
-        .product-details {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 80%;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #f9f9f9;
-        }
+      img {
+        max-width: 100%;
+      }
 
-        .product-image {
-            flex: 1;
-            margin-right: 20px;
-        }
+      .preview {
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
 
-        .product-details-text {
-            flex: 2;
-        }
+      .preview-pic.tab-content {
+        overflow: hidden;
+      }
 
-        .product-name {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+      .preview-pic.tab-content img {
+        width: 100%;
+        -webkit-animation-name: opacity;
+        animation-name: opacity;
+        -webkit-animation-duration: 0.3s;
+        animation-duration: 0.3s;
+      }
 
-        .product-description {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
+      .card {
+        margin-top: 50px;
+        background: #eee;
+        line-height: 1.5em;
+        height: 400px;
+      }
 
-        .product-price {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff5722;
-            margin-bottom: 20px;
-        }
+      .details {
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        background-color: #222831;
+        color: white;
+        padding: 50px;
+        height: 400px;
+        position: relative; /* Add this */
+      }
 
-        .quantity-adjust {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+      .product-title {
+        font-size: 50px;
+        margin-top: 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
 
-        .quantity-input {
-            width: 50px;
-            text-align: center;
-        }
+      .product-description {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
 
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-        }
+      .price {
+        font-size: 30px;
+        margin-top: 25px;
+      }
 
-        .button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+      .action {
+        position: absolute; /* Add this */
+        bottom: 20px; /* Add this */
+        right: 20px; /* Add this */
+        display: flex;
+        justify-content: flex-end;
+      }
 
-        .add-to-cart {
-            background-color: #4caf50;
-            color: white;
-        }
+      .add-to-cart,
+      .buy-now {
+        padding: 1.2em 1.5em;
+        border: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
 
-        .buy-now {
-            background-color: #ff5722;
-            color: white;
+      .add-to-cart {
+        background: #28a745;
+        color: #fff;
+      }
+
+      .buy-now {
+        background-color: #ec5526;
+        color: #fff;
+        margin-left: 15px;
+      }
+
+      .add-to-cart:hover {
+        background: #23c448;
+        color: #fff;
+      }
+
+      .buy-now:hover {
+        background: #fc4a14;
+        color: #fff;
+      }
+
+      @keyframes opacity {
+        0% {
+          opacity: 0;
+          transform: scale(3);
         }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
     </style>
-</head>
-<body>
-<div class="container">
-    <div class="product-details">
-        <div class="product-image">
-            <img src="path_to_product_image.jpg" alt="Product Image" style="width: 100%;">
-        </div>
-        <div class="product-details-text">
-            <div class="product-name">Product Name</div>
-            <div class="product-description">Product Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.</div>
-            <div class="product-price">$99.99</div>
-            <div class="quantity-adjust">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="container-fliud">
+          <div class="wrapper row">
+            <div class="preview col-md-6">
+              <div class="preview-pic tab-content">
+                <div class="tab-pane active" id="pic-1" style="margin: 3em">
+                  <img src="http://localhost:8080/images/f2.png" />
+                </div>
+              </div>
+            </div>
+            <div class="details col-md-6">
+              <h3 class="product-title" th:text="${product.Name}"></h3>
+              <p
+                class="product-description"
+                th:text="${product.Description}"
+              ></p>
+              <h4 class="price">
+                Price:
+                <span
+                  style="color: #ffc107"
+                  th:text="'Rs. ' + ${product.price}"
+                ></span>
+              </h4>
+              <!-- <div class="quantity-adjust">
                 <span>Quantity:</span>
-                <input type="number" class="quantity-input" value="1">
+                <input type="number" class="quantity-input" value="1" />
+              </div> -->
+              <div class="action">
+                <button class="add-to-cart" type="button">Add to Cart</button>
+                <button class="buy-now" type="button">Buy Now</button>
+              </div>
             </div>
-            <div class="buttons">
-                <button class="button add-to-cart">Add to Cart</button>
-                <button class="button buy-now">Buy Now</button>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</body>
+  </body>
 </html>
