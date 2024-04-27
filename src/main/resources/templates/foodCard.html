@@ -1,6 +1,6 @@
 <!-- card start -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<a th:fragment="foodCard" th:href="@{'/productDetail?id=' + ${product.id}}">
+<a th:fragment="foodCard" th:href="@{'/productdetails/' + ${product.ID}}">
   <div class="card m-2" style="width: 22rem; border-radius: 1rem">
       <div class="d-flex justify-content-center p-auto py-2 bg" style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0">
           <img src="images/f2.png" class="card-img-top img-fluid w-50 my-2" alt="..." />
@@ -18,3 +18,7 @@
   </div>
 </a>
 <!-- card end -->
+
+
+
+

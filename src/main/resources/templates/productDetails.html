@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" type="" />
+
+    <title>Product Detail</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+
+  </head>
+
+  <body>
+    <!-- header section strats -->
+    <section style="background-color: #0d0e10 !important">
+      <div th:replace="navbar :: navbar"></div>
+    </section>
+    <!-- end header section -->
+
+    <!-- product details section start -->
+
+    <div class="container">
+      <div class="product-details-card">
+        <div class="container-fliud">
+          <div class="wrapper row">
+            <div class="preview col-md-6">
+              <div class="preview-pic tab-content">
+                <div class="tab-pane active" id="pic-1">
+                  <img src="/images/f2.png" />
+                </div>
+                <div class="tab-pane" id="pic-2">
+                  <img src="/images/f2.png" />
+                </div>
+                <div class="tab-pane" id="pic-3">
+                  <img src="/images/f2.png" />
+                </div>
+                <div class="tab-pane" id="pic-4">
+                  <img src="/images/f2.png" />
+                </div>
+                <div class="tab-pane" id="pic-5">
+                  <img src="/images/f2.png" />
+                </div>
+              </div>
+              <ul class="preview-thumbnail nav nav-tabs">
+                <li class="active">
+                  <a data-target="#pic-1" data-toggle="tab"
+                    ><img src="/images/f2.png"
+                  /></a>
+                </li>
+                <li>
+                  <a data-target="#pic-2" data-toggle="tab"
+                    ><img src="/images/f2.png"
+                  /></a>
+                </li>
+                <li>
+                  <a data-target="#pic-3" data-toggle="tab"
+                    ><img src="/images/f2.png"
+                  /></a>
+                </li>
+                <li>
+                  <a data-target="#pic-4" data-toggle="tab"
+                    ><img src="/images/f2.png"
+                  /></a>
+                </li>
+                <li>
+                  <a data-target="#pic-5" data-toggle="tab"
+                    ><img src="/images/f2.png"
+                  /></a>
+                </li>
+              </ul>
+            </div>
+            <div class="details col-md-6">
+              <h3 th:text="${product.Name}" class="product-title"></h3>
+
+              <p
+                th:text="${product.description}"
+                class="product-description"
+              ></p>
+              <h4 class="price">
+                price: <span th:text="'Rs. ' + ${product.price}"> </span>
+              </h4>
+
+              <div class="action">
+                <button class="like btn btn-default" type="button">
+                  Order Now
+                </button>
+                <button class="add-to-cart btn btn-default" type="button">
+                  add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- product details section end-->
+
+    <!-- jQery -->
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <!-- popper js -->
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- bootstrap js -->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <!-- owl slider -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+    ></script>
+    <!-- isotope js -->
+    <script
+      th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
+    ></script>
+    <!-- nice select -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+    ></script>
+    <!-- custom js -->
+    <script th:src="@{/js/custom.js}"></script>
+    <!-- Google Map -->
+    <script
+      th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
+    ></script>
+    <!-- End Google Map -->
+  </body>
+</html>
