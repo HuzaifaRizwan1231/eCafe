@@ -1,24 +1,35 @@
 <!-- card start -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<a th:fragment="foodCard" th:href="@{'/productdetails/' + ${product.ID}}">
-  <div class="card m-2" style="width: 22rem; border-radius: 1rem">
-      <div class="d-flex justify-content-center p-auto py-2 bg" style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0">
-          <img src="images/f2.png" class="card-img-top img-fluid w-50 my-2" alt="..." />
+  <div th:fragment="foodCard">
+    <div class="card m-2" style="width: 22rem; border-radius: 1rem">
+      <div
+        class="d-flex justify-content-center p-auto py-2 bg"
+        style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0"
+      >
+        <img
+          src="/images/f2.png"
+          class="card-img-top img-fluid w-50 my-2"
+          alt="..."
+        />
       </div>
-      <div class="card-body text-light" style="background-color: #222831; border-radius: 0 0 1rem 1rem">
-          <h5 class="card-title" th:text="${product.Name}"></h5>
-          <p class="card-text" th:text="${product.Description}"></p>
-          <div class="d-flex justify-content-between align-items-center">
-              <span th:text="'Rs. ' + ${product.price}"></span>
-              <div class="bg-warning rounded-circle p-2 cursor-pointer">
-                  <img src="images/cart.png" style="width: 2rem" class="cartBtn" />
-              </div>
-          </div>
+      <div
+        class="card-body text-light"
+        style="background-color: #222831; border-radius: 0 0 1rem 1rem"
+      >
+        <h5 class="card-title" th:text="${product.Name}"></h5>
+        <p class="card-text" th:text="${product.Description}"></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span th:text="'Rs. ' + ${product.price}"></span>
+          <a
+            th:href="@{'/productdetails/' + ${product.ID}}"
+          >
+            <div class="bg-warning rounded-circle p-2 cursor-pointer">
+              <img src="/images/cart.png" style="width: 2rem" class="cartBtn" />
+            </div>
+          </a>
+        </div>
       </div>
+    </div>
   </div>
-</a>
-<!-- card end -->
-
-
-
-
+  <!-- card end -->
+</html>
