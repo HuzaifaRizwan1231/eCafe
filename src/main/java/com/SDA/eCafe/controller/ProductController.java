@@ -117,4 +117,24 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/login")
+    public String login(Model model) {
+        try {
+            return "LoginRegister";
+        }catch(Exception error){
+
+            return "error";
+        }
+    }
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        try {
+            return "Cart";
+        }catch(Exception error){
+
+            return "error";
+        }
+    }
+
 }
