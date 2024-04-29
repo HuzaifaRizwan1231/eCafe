@@ -144,7 +144,7 @@ public class ProductController {
         }
     }
 
-}
+
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -157,18 +157,6 @@ public class ProductController {
         }
     }
 
-}
-
-
-    @GetMapping("/cart")
-    public String cart(Model model) {
-        try {
-            return "Cart";
-        }catch(Exception error){
-
-            return "error";
-        }
-    }
 
 }
 

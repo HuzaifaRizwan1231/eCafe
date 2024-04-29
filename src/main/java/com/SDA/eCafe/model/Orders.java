@@ -71,7 +71,7 @@ public class Orders {
     private String PaymentMethod;
 
     @Column(name = "PickupTime")
-    private Time PickupTime; // Change to java.sql.Time
+    private java.sql.Time PickupTime;
 
     public Integer getId() {
         return Id;

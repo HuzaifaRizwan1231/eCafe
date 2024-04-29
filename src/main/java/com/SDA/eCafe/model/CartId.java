@@ -3,14 +3,14 @@ package com.SDA.eCafe.model;
 import java.io.Serializable;
 
 public class CartId implements Serializable {
-    private Integer userId;
-    private Integer productId;
+    private Integer UserId;
+    private Integer ProductId;
 
     public CartId() {
     }
 
-    public CartId(Integer userId, Integer productId) {
-        this.userId = userId;
-        this.productId = productId;
+    public CartId(Integer UserId, Integer ProductId) {
+        this.UserId = UserId;
+        this.ProductId = ProductId;
     }
 }

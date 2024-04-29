@@ -9,35 +9,37 @@ import com.SDA.eCafe.model.CartId;
 @IdClass(CartId.class)
 public class Cart {
     @Id
-    private Integer userId;
+    private Integer UserId;
 
     @Id
-    private Integer productId;
+    private Integer ProductId;
 
     @Column
-    private Integer quantity;
+    private Integer Quantity;
 
     public Integer getUserId() {
-        return userId;
+        return UserId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(Integer UserId) {
+        this.UserId = UserId;
     }
 
     public Integer getProductId() {
-        return productId;
+        return ProductId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setProductId(Integer ProductId) {
+        this.ProductId = ProductId;
     }
 
     public Integer getQuantity() {
-        return quantity;
+        return Quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setQuantity(Integer Quantity) {
+        this.Quantity = Quantity;
     }
+
+    
 }
