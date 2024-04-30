@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.SDA.eCafe.model.Cart;
 import com.SDA.eCafe.model.Orders;
 import com.SDA.eCafe.model.Product;
+import com.SDA.eCafe.repository.CartRepository;
 import com.SDA.eCafe.repository.OrderRepository;
 
 import jakarta.servlet.http.Cookie;
@@ -29,10 +34,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class OrderController {
 
     private OrderRepository orderRepository;
+    private CartRepository cartRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository, CartRepository cartRepository) {
         this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
     }
 
     @GetMapping("/getOrders")
@@ -179,5 +186,67 @@ public class OrderController {
         } catch (Exception error) {
             return "error";
         }
+    }
+
+    @GetMapping("/placeOrder")
+    public String placeOrder(@RequestParam(value = "time", required = true) @DateTimeFormat(pattern = "HH:mm") LocalTime pickupTimeStr, @RequestParam(value = "paymentMethod", required = true) String paymentMethod, HttpServletRequest request) {
+
+        // Functions for date time
+        Date date = new Date(System.currentTimeMillis());
+        Time pickupTime = Time.valueOf(pickupTimeStr);
+       
+        try{
+            // GET USER ID FROM COOKIES
+            Integer userId = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userId")) {
+                        userId = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+            }
+
+            
+            // GET CART ITEMS WITH PRODUCTS BASED ON USER ID
+            if (userId != null) {
+                List<Object[]> cartWithProducts = cartRepository.findCartOfProductByUserId(userId);
+                List<Cart> cartItems = new ArrayList<>();
+                List<Product> products = new ArrayList<>();
+    
+                for (Object[] result : cartWithProducts) {
+                    Cart cartItem = (Cart) result[0];
+                    Product product = (Product) result[1];
+                    cartItems.add(cartItem);
+                    products.add(product);
+                }
+                
+                //NOW INSERTING THE USERS CART ITEMS INTO NEW ORDERS
+                for (int i=0;i<cartItems.size();i++){
+                    // Instance of order
+                    Orders order = new Orders();
+                    System.out.println(i+"/n");
+                    order.setProductId(cartItems.get(i).getProductId());
+                    order.setUserId(userId);
+                    order.setQuantity(cartItems.get(i).getQuantity());
+                    order.setProductPrice(products.get(i).getPrice());
+                    order.setDate(date);
+                    order.setStatus("Pending");
+                    order.setPaymentMethod(paymentMethod);
+                    order.setPickupTime(pickupTime);
+                    orderRepository.save(order);
+
+                }
+
+            } else {
+                return "redirect:/login";
+            }
+            return "redirect:/cart";
+    }
+    catch (Exception error) {
+        System.out.println(error.getMessage());
+        return "error";
+    }
     }
 }

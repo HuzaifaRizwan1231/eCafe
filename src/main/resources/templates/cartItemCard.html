@@ -16,21 +16,21 @@
                         <i class="bx bxs-star text-warning"></i>
                         <i class="bx bxs-star-half text-warning"></i>
                     </p> -->
-                    <p th:text="${products[i.index].category}" class="mb-0 mt-1">Color : <span class="fw-medium"></span></p>
+                    <p th:text="${products[i.index].category}" class="mb-0 mt-1"><span class="fw-medium"></span></p>
                 </div>
             </div>
             <div class="flex-shrink-0 ms-2">
                 <ul class="list-inline mb-0 font-size-16">
                     <li class="list-inline-item">
-                        <a href="#" class="text-muted px-1">
+                        <a th:href="@{'/deleteFromCart/' + ${products[i.index].ID}}" class="text-danger px-1">
                             <i class="mdi mdi-trash-can-outline"></i>
                         </a>
                     </li>
-                    <li class="list-inline-item">
+                    <!-- <li class="list-inline-item">
                         <a href="#" class="text-muted px-1">
                             <i class="mdi mdi-heart-outline"></i>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -46,9 +46,12 @@
                 <div class="col-md-5">
                     <div class="mt-3">
                         <p class="text-muted mb-2">Quantity</p>
-                        <div class="d-inline-flex">
-                            <input th:value="${cartItem.Quantity}" class="form-select form-select-sm w-25 ">
-                        </div>
+                        <form class="d-inline-flex" method="get" th:action="@{/updateQuantity}">
+                            <input th:value="${products[i.index].ID}" name="productId" id="productId" class="d-none">
+                            <input th:value="${cartItem.Quantity}" name="quantity" id="quantity" class="form-select form-select-sm w-25 mr-2">
+                            <button type="submit">Update</button>
+
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-3">

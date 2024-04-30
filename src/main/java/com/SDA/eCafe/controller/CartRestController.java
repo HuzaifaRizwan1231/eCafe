@@ -27,6 +27,7 @@ public class CartRestController {
 
     @PostMapping("/cart/addToCart")
     public String addToCart(@RequestBody Cart cartRequest) {
+        System.out.println("heloooooooooooooooooooooooooooooooooooo\n");
         try {
             Integer userId = cartRequest.getUserId();
             Integer productId = cartRequest.getProductId();
