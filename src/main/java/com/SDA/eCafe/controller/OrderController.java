@@ -20,8 +20,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.SDA.eCafe.model.Cart;
+import com.SDA.eCafe.model.CartId;
 import com.SDA.eCafe.model.Orders;
 import com.SDA.eCafe.model.Product;
 import com.SDA.eCafe.repository.CartRepository;
@@ -237,6 +239,9 @@ public class OrderController {
                     order.setPickupTime(pickupTime);
                     orderRepository.save(order);
 
+                    CartId cartId = new CartId(userId, cartItems.get(i).getProductId());
+                    Optional<Cart> cart = cartRepository.findById(cartId);
+                    cart.ifPresent(cartRepository::delete);
                 }
 
             } else {

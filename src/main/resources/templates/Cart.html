@@ -73,7 +73,7 @@
                 <div class="col-sm-6">
                     <div class="text-sm-end mt-2 mt-sm-0">
                         <h2 th:if="${cartItems.size() == 0}">No Items in the Cart</h2>
-                        <button  data-toggle="modal"
+                        <button  data-toggle="modal" id="proceed-for-payment"
                         data-target="#placeOrderModal" th:if="${cartItems.size() > 0}" class="btn btn-success">
                             <i class="mdi mdi-cart-outline me-1"></i> Proceed For Payment
                         </button>
@@ -312,7 +312,27 @@
         cardExpiration.setAttribute('required', '');
         cardCVV.setAttribute('required', '');
     }
+
+    
+
+    
 });
+
+document.getElementById('proceed-for-payment').addEventListener('click', function() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+
+        // Pad the hours and minutes with leading zeros, if required
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+
+        // Combine the hours and minutes
+        var timeString = hours + ":" + minutes;
+
+        // Set the time string as the value of the time input field
+        document.getElementById('time').value = timeString;
+ });
 </script>
 </body>
 </html>

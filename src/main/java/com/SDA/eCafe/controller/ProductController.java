@@ -134,17 +134,6 @@ public class ProductController {
     }
 
 
-    @PostMapping("/product/addToCart")
-    public String addToCart(@RequestBody String entity) {
-        try {
-            System.out.println("agya tu jawan ho kr");
-            return "nothing";
-        } catch (Exception error) {
-           return "error";
-        }
-    }
-
-
 
     @GetMapping("/login")
     public String login(Model model) {
