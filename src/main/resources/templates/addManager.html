@@ -3,79 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <title>Manage Managers</title>
-  <!-- bootstrap core css -->
+  <!-- Bootstrap core CSS -->
   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
 
-  <!--owl slider stylesheet -->
-  <link
-          rel="stylesheet"
-          type="text/css"
-          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
-  />
-  <!-- nice select  -->
-  <link
-          rel="stylesheet"
-          th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
-          integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
-          crossorigin="anonymous"
-  />
-  <!-- font awesome style -->
+  <!-- Font Awesome -->
   <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
   <link th:href="@{/css/style.css}" rel="stylesheet" />
-  <!-- responsive style -->
+  <!-- Responsive style -->
   <link th:href="@{/css/responsive.css}" rel="stylesheet" />
 </head>
 <body>
-  
-
+        <h2 class="text-center mb-4">Manager Registration Form</h2>
     <form>
         <div class="form-group">
-          <label for="exampleInputEmail1">sadsada address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <label for="inputName">Name</label>
+          <input type="text" class="form-control" id="inputName" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email address</label>
+          <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label for="inputContact">Contact</label>
+          <input type="tel" class="form-control" id="inputContact" placeholder="Enter contact number">
         </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="Enter address">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input type="password" class="form-control" id="inputPassword" placeholder="Password">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-<!-- Add Manager Modal End -->
 
-<!-- jQery -->
+<!-- jQuery and Bootstrap JS -->
 <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
-<!-- popper js -->
-<script
-        th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"
-></script>
-<!-- bootstrap js -->
 <script th:src="@{/js/bootstrap.js}"></script>
-<!-- owl slider -->
-<script
-        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
-></script>
-<!-- isotope js -->
-<script
-        th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
-></script>
-<!-- nice select -->
-<script
-        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
-></script>
-<!-- custom js -->
-<script th:src="@{/js/custom.js}"></script>
-<!-- Google Map -->
-<script
-        th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
-></script>
-<!-- End Google Map -->
+
 </body>
 </html>
