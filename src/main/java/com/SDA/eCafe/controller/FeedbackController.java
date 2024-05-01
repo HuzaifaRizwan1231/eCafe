@@ -13,6 +13,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class FeedbackController {
@@ -68,5 +69,12 @@ public class FeedbackController {
 
         // Redirect to the home page or any other desired page after submitting feedback
         return "redirect:/";
+    }
+
+    @GetMapping("/viewfeedback")
+    public String viewFeedbacks(Model model) {
+        List<Feedback> feedbacks = feedbackRepository.findAll();
+        model.addAttribute("feedbacks", feedbacks);
+        return "ViewFeedback"; 
     }
 }

@@ -24,9 +24,9 @@
         </div>
         <form
           id="register"
-          action="/register"
+          action="/registerUser"
           method="post"
-          class="inputdata"
+          class="registerdata"
           th:object="${user}"
         >
           <input
@@ -34,7 +34,7 @@
             class="inputfield"
             placeholder="Enter Username"
             required
-            th:field="*{username}"
+            th:field="*{name}"
           />
           <input
             type="email"
@@ -55,7 +55,15 @@
             class="inputfield"
             placeholder="Enter Contact Number"
             required
-            th:field="*{contactNumber}"
+            th:field="*{contact}"
+          />
+
+          <input
+            type="text"
+            class="inputfield"
+            placeholder="Enter Address"
+            required
+            th:field="*{address}"
           />
           <br />
           <button type="submit" class="submit-btn">Register</button>
