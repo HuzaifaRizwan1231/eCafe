@@ -16,6 +16,9 @@
     </div>
     <br>
     <form name="feedback_form" id="feedback_form" method="post" th:action="@{/submitFeedback}">
+        <!-- Hidden productid field -->
+        <input type="hidden" name="productid" value="YOUR_PRODUCT_ID_HERE">
+        
         <div class="mb-4">
             <label class="form-label" for="feedback_comments">Feedback:</label>
             <textarea class="form-control" required rows="6" name="text" id="feedback_comments"></textarea>

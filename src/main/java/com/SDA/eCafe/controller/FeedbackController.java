@@ -8,6 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 @Controller
@@ -16,21 +20,34 @@ public class FeedbackController {
     @Autowired
     private FeedbackRepository feedbackRepository;
 
-    // Inject UserRepository and ProductRepository if needed
+    // Method to extract user ID from cookies
+    private int getUserIdFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userID")) {
+                    return Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        // If user ID is not found, return -1 or any other value that indicates absence of user ID
+        return -1;
+    }
 
-    @GetMapping("/feedback")
-    public String showFeedbackForm(Model model) {
-        // Assuming you have methods to get all users and products from UserRepository and ProductRepository
-        // List<User> users = userRepository.findAll();
-        // List<Product> products = productRepository.findAll();
-
-        // For simplicity, assuming the user and product IDs are hardcoded here
-        int userID = 1; // Example user ID
-        int productID = 1; // Example product ID
+    @GetMapping("/feedback/{productId}")
+    public String showFeedbackForm(@PathVariable("productId") int productId, HttpServletRequest request, Model model) {
+        // Get user ID from cookies
+        int userId = getUserIdFromCookies(request);
+        
+        // If user ID is not found, redirect to login page
+        if (userId == -1) {
+            // You can redirect to a login page with a message prompting the user to log in first
+            return "redirect:/login?message=Please login first to provide feedback";
+        }
 
         // Pass user and product IDs to the model
-        model.addAttribute("userID", userID);
-        model.addAttribute("productID", productID);
+        model.addAttribute("userId", userId);
+        model.addAttribute("productId", productId);
 
         // Add an empty Feedback object to bind the form data
         model.addAttribute("feedback", new Feedback());
@@ -49,7 +66,7 @@ public class FeedbackController {
         // Add a confirmation message to the model
         model.addAttribute("confirmationMessage", "Thank you for your feedback!");
 
-        // Return the name of the confirmation view
-        return "/";
+        // Redirect to the home page or any other desired page after submitting feedback
+        return "redirect:/";
     }
 }

@@ -69,6 +69,7 @@ public class UserController {
                 return "LoginRegister";
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return "error";
         }
     }
