@@ -50,6 +50,7 @@
                 <th>Product ID</th>
                 <th>Text</th>
                 <th>Date</th>
+               
             </tr>
         </thead>
         <tbody>
@@ -59,6 +60,7 @@
                 <td th:text="${feedback.productID}"></td>
                 <td th:text="${feedback.text}"></td>
                 <td th:text="${#temporals.format(feedback.date, 'dd-MM-yyyy')}"></td>
+               
             </tr>
         </tbody>
     </table>
