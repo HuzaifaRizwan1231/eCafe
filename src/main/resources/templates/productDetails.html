@@ -229,6 +229,7 @@
              id="placeOrderForm"
              method="get" th:action="@{/orderNow}"
            >
+           <h2 th:text="'Price of single item: Rs. ' + ${product.price}" class="text-center"></h2>
            <!-- Hidden inputs start-->
            <input
                 required
