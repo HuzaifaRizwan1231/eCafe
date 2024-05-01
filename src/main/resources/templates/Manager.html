@@ -20,19 +20,88 @@
         </tr>
       </thead>
       <tbody >
-        <tr th:each="user : ${users}">
-          <th scope="row" th:text="${user.UserId}"></th>
-          <td th:text="${user.Name}"></td>
-          <td th:text="${user.Email}"></td>
-          <td th:text="${user.Contact}"></td>
-          <td th:text="${user.Password}"></td>
+        <tr th:each="manager : ${managers}">
+          <th scope="row" th:text="${manager.UserId}"></th>
+          <td th:text="${manager.Name}"></td>
+          <td th:text="${manager.Email}"></td>
+          <td th:text="${manager.Contact}"></td>
+          <td th:text="${manager.Password}"></td>
           <td>
-            <!-- <button class="btn btn-danger" th:onclick="'deleteuser(' + ${user.userId} + ')'">Delete</button> -->
+            <a class="btn btn-danger" th:href="'/adminpanel/deleteManager/' + ${manager.UserId}">Delete</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adduserModal">+ Add user</button>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addManagerModal">+ Add user</button>
   </div>
+  <!-- Modal for Adding Manager -->
+  <div
+  class="modal fade"
+  id="addManagerModal"
+  tabindex="-1"
+  aria-labelledby="addManagerModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addManagerModalLabel">
+          Add New Manager
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="/addManager" method="post">
+          <div class="mb-3">
+            <label for="managerName" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="managerName"
+              name="name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="managerEmail" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="managerEmail"
+              name="email"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="managerContact" class="form-label">Contact</label>
+            <input
+              type="text"
+              class="form-control"
+              id="managerContact"
+              name="contact"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="managerPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="managerPassword"
+              name="password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Manager</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

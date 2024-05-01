@@ -27,12 +27,88 @@
           <td th:text="${clerk.contact}"></td>
           <td th:text="${clerk.password}"></td>
           <td>
-            <button class="btn btn-danger" th:onclick="'deleteClerk(' + ${clerk.userId} + ')'">Delete</button>
+            <a class="btn btn-danger" th:href="'/adminpanel/deleteClerk/'+ ${clerk.UserId}">Delete</a>
           </td>
         </tr>
       </tbody>
     </table>
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addClerkModal">+ Add Clerk</button>
   </div>
+
+  <div
+      class="modal fade"
+      id="addClerkModal"
+      tabindex="-1"
+      aria-labelledby="addClerkModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addClerkModalLabel">Add New Clerk</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="/addClerk" method="post">
+              <div class="mb-3">
+                <label for="clerkName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="clerkName"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="clerkEmail" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="clerkEmail"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="clerkContact" class="form-label">Contact</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="clerkContact"
+                  name="contact"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="clerkPassword" class="form-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="clerkPassword"
+                  name="password"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Add Clerk</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
