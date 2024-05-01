@@ -1,3 +1,5 @@
+package com.SDA.eCafe.controller;
+
 import com.SDA.eCafe.model.User;
 import com.SDA.eCafe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -67,8 +75,10 @@ public class UserController {
                 model.addAttribute("message", "User does not exist");
                 return "LoginRegister";
             }
+
         } catch (Exception e) {
             e.printStackTrace();
+            return "error";
         }
     }
   
@@ -78,14 +88,14 @@ public class UserController {
         return "adminPanel";
     }
 
-    @GetMapping("/adminpanel/Managers")
+    @GetMapping("/adminpanel/addManager")
     public String addManagerForm(Model model) {
         model.addAttribute("user", new User());
         return "addManager";
     }
 
 
-    @GetMapping("/adminpanel/Clerks")
+    @GetMapping("/adminpanel/addClerk")
     public String addClerkForm(Model model) {
         model.addAttribute("user", new User());
         return "addClerk";
@@ -93,7 +103,7 @@ public class UserController {
 
     // FUNCTIONS TO ADD MANAGER AND CLERK
     @PostMapping("/adminpanel/addManager")
-    public String addManager(@RequestParam String name, @RequestParam String contact, 
+    public String addManager(@RequestParam String name, @RequestParam long contact, 
                              @RequestParam String email, @RequestParam String password, 
                              @RequestParam String address) {
         User user = new User();
@@ -108,7 +118,7 @@ public class UserController {
     }
 
     @PostMapping("/adminpanel/addClerk")
-    public String addClerk(@RequestParam String name, @RequestParam String contact, 
+    public String addClerk(@RequestParam String name, @RequestParam long contact, 
                            @RequestParam String email, @RequestParam String password, 
                            @RequestParam String address) {
         User user = new User();
@@ -203,5 +213,5 @@ public class UserController {
 
         // Redirect to login page after successful registration
         return "redirect:/";
-        }
     }
+}

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Manage Managers</title>
   <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
 
   <!--owl slider stylesheet -->
   <link
@@ -20,12 +20,12 @@
           crossorigin="anonymous"
   />
   <!-- font awesome style -->
-  <link th:href="@{css/font-awesome.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
 
   <!-- Custom styles for this template -->
-  <link th:href="@{css/style.css}" rel="stylesheet" />
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
   <!-- responsive style -->
-  <link th:href="@{css/responsive.css}" rel="stylesheet" />
+  <link th:href="@{/css/responsive.css}" rel="stylesheet" />
 </head>
 <body>
   <div class="container mt-4">
@@ -43,13 +43,13 @@
       </thead>
       <tbody >
         <tr th:each="manager : ${managers}">
-          <th scope="row" th:text="${manager.UserId}"></th>
-          <td th:text="${manager.Name}"></td>
-          <td th:text="${manager.Email}"></td>
-          <td th:text="${manager.Contact}"></td>
-          <td th:text="${manager.Password}"></td>
+          <th scope="row" th:text="${manager.userId}"></th>
+          <td th:text="${manager.name}"></td>
+          <td th:text="${manager.email}"></td>
+          <td th:text="${manager.contact}"></td>
+          <td th:text="${manager.password}"></td>
           <td>
-            <a class="btn btn-danger" th:href="'/adminpanel/deleteManager/' + ${manager.UserId}">Delete</a>
+            <a class="btn btn-danger" th:href="'/adminpanel/deleteManager/' + ${manager.userId}">Delete</a>
           </td>
         </tr>
       </tbody>
@@ -57,76 +57,72 @@
     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addManagerModal">+ Add user</button>
   </div>
   <!-- Modal for Adding Manager -->
+  <!-- Add Clerk Modal Start-->
   <div
   class="modal fade"
   id="addManagerModal"
-  tabindex="-1"
+  tabindex="0"
+  role="dialog"
   aria-labelledby="addManagerModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addManagerModalLabel">
-          Add New Manager
-        </h5>
+        <h5 class="modal-title" id="addManagerModalLabel">Add to Cart</h5>
         <button
           type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
+          class="close"
+          data-dismiss="modal"
           aria-label="Close"
-        ></button>
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
       <div class="modal-body">
-        <form action="/addManager" method="post">
-          <div class="mb-3">
-            <label for="managerName" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="managerName"
-              name="name"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="managerEmail" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="managerEmail"
-              name="email"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="managerContact" class="form-label">Contact</label>
-            <input
-              type="text"
-              class="form-control"
-              id="managerContact"
-              name="contact"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="managerPassword" class="form-label">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="managerPassword"
-              name="password"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Add Manager</button>
+        <form
+          id="addManagerForm"
+         
+          method="post"
+        >
+          <label for="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            class="form-control"
+            value="1"
+            min="1"
+          />
+          
         </form>
+      </div>
+      <div class="modal-footer">
+        <!-- <button
+          type="button"
+          class="btn btn-warning font-weight-bold text-white"
+          onclick="document.getElementById('addManagerForm').submit()"
+        >
+          Add to Cart
+        </button> -->
+        <button type="button" class="btn btn-warning font-weight-bold text-white" id="addManagerBtn">
+          Add to Cart
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
       </div>
     </div>
   </div>
-</div>
+ </div>
+<!-- Add Manager Modal End -->
+
 <!-- jQery -->
-<script th:src="@{js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
 <!-- popper js -->
 <script
         th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
@@ -134,7 +130,7 @@
         crossorigin="anonymous"
 ></script>
 <!-- bootstrap js -->
-<script th:src="@{js/bootstrap.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
 <!-- owl slider -->
 <script
         th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
@@ -148,7 +144,7 @@
         th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
 ></script>
 <!-- custom js -->
-<script th:src="@{js/custom.js}"></script>
+<script th:src="@{/js/custom.js}"></script>
 <!-- Google Map -->
 <script
         th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
