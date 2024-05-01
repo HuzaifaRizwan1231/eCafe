@@ -1,6 +1,7 @@
 package com.SDA.eCafe.model;
 
 import jakarta.persistence.*;
+
 import java.sql.Time;
 import java.util.Date;
 
@@ -8,84 +9,92 @@ import java.util.Date;
 @Table(name = "User")
 public class User{
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
-    private Integer UserId;
 
-    @Column(name = "Name")
-    private String Name;
+    private Integer userId;
 
-    @Column(name = "Contact")
-    private String Contact;
+    @Column(name = "Name", nullable = false)
+    private String name;
 
-    @Column(name = "Email")
-    private String Email;
+    @Column(name = "Email", nullable = false, unique = true)
+    private String email;
 
-    @Column(name = "Password")
-    private String Password;
+    @Column(name = "Password", nullable = false)
+    private String password;
 
-    @Column(name = "Address")
-    private String Address;
+    @Column(name = "Address", nullable = false, length = 250)
+    private String address;
 
-    @Column(name = "Role")
-    private String Role;
+    @Column(name = "Contact", nullable = false, precision = 11, scale = 0)
+    private long contact;
 
-    public void setUserId(Integer UserId) {
-       this. UserId = UserId;
-    }
-
-    public void setName(String Name) {
-        this.Name = Name;
-    }
-    public void setContact(String Contact) {
-        this.Contact = Contact;
-    }
-
-    public void setEmail(String Email) {
-        this.Email = Email;
-    }
-
-    public void setPassword(String Password) {
-        this.Password = Password;
-    }
-
-    public void setAddress(String Address) {
-        this.Address = Address;
-    }
-
-    public void setRole(String Role) {
-        this.Role = Role;
-    }
-
-   
+    // @Enumerated(EnumType.STRING)
+    @Column(name = "Role", nullable = false)
+    private String role;
 
     public Integer getUserId() {
-        return UserId;
+        return userId;
     }
 
     public String getName() {
-        return Name;
-    }
-    public String getContact() {
-        return Contact;
+        return name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getPassword() {
-        return Password;
-    }
-
-    public String getRole() {
-        return Role;
+        return password;
     }
 
     public String getAddress() {
-        return Address;
+        return address;
     }
 
-    
+    public long getContact() {
+        return contact;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    // Constructor
+    public User() {
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setContact(long contact) {
+        this.contact = contact;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+ 
+
 }

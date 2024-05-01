@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/ViewFeedback.css}" />
+
+        <!-- bootstrap core css -->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+
+    <title>Feedbacks for Product</title>
+</head>
+<body>
+ <!-- header section strats -->
+ <section style="background-color: #0d0e10 !important">
+    <div th:replace="navbar :: navbar"></div>
+  </section>
+  <!-- end header section -->
+  <div class="container">
+    <h2>Feedbacks</h2>
+    <div th:if="${feedbacks.size() == 0}">
+        <p>No feedbacks available for this product.</p>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Feedback ID</th>
+                <th>User ID</th>
+                <th>Product ID</th>
+                <th>Text</th>
+                <th>Date</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="feedback : ${feedbacks}">
+                <td th:text="${feedback.feedbackID}"></td>
+                <td th:text="${feedback.userID}"></td>
+                <td th:text="${feedback.productID}"></td>
+                <td th:text="${feedback.text}"></td>
+                <td th:text="${#temporals.format(feedback.date, 'dd-MM-yyyy')}"></td>
+               
+            </tr>
+        </tbody>
+    </table>
+    <a href="/cancel" class="btn-cancel">Cancel</a>
+</div>
+</div>
+
+</body>
+</html>

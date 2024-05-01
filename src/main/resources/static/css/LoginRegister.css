@@ -1,0 +1,125 @@
+html
+{
+  scroll-behavior: smooth;
+  @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+}
+body
+{
+    font-family: 'Caveat', cursive;
+
+    background-image: url("/images/loginbackground.png");
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.hero{
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(rgba(173, 154, 112, 0.822), rgba(183, 161, 124, 0.4)),url("/images/loginbackground.png");
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+}
+.form-box{
+  width: 400px;
+  height: 540px;
+  position: relative;
+  margin: 31px auto;
+  background: #f0d2a2;
+  padding: 5px;
+  overflow: hidden;
+}
+
+.Welcome{
+  color: #58441c;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.inputdata
+{
+  
+  top: 140px;
+  position: absolute;
+  width: 280px;
+  transition: .5s;
+}
+
+.registerdata
+{
+  
+  margin: auto;
+  width: 280px;
+  transition: .5s;
+}
+
+.inputfield{
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 1px solid rgb(133, 83, 17);
+  outline: none;
+  background: transparent;
+}
+
+select 
+{
+  width: 100%;
+  padding: 10px 0;
+  margin: 5px 0;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 1px solid rgb(133, 83, 17);
+  outline: none;
+  background: transparent;
+}
+
+
+.submit-btn{
+  width: 85%;
+  padding: 10px 30px;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  background: linear-gradient(to right, #e9c67f, #8d6b31);
+  border: 0;
+  outline: none;
+  border-radius: 30px;
+}
+
+.check-box{
+  margin: 30px 10px 30px 0px;
+}
+
+.register-link{
+  margin-left: 180px ;
+  text-decoration: none;
+  font-size: 14px;
+  color: black;
+  font-style: italic;
+
+}
+
+span{
+  color: #58441c;
+  font-size: 12px;
+  bottom: 68px;
+  position: absolute;
+}
+#login{
+  left: 50px;
+  top: 190px;
+}
+#register{
+  left: 450px;
+}
