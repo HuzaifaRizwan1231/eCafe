@@ -20,6 +20,12 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/adminpanel")
+    public String adminPage(Model model) {
+        model.addAttribute("user", new User());
+        return "adminPanel";
+    }
+
     @GetMapping("/adminpanel/Managers")
     public String addManagerForm(Model model) {
         model.addAttribute("user", new User());
