@@ -1,6 +1,5 @@
 package com.SDA.eCafe.controller;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,7 +44,7 @@ public class OrderController {
     }
 
     @GetMapping("/getOrders")
-    public String getOrders(Model model, HttpSession session) {
+    public String getOrders(Model model) {
         List<Orders> orders = orderRepository.findAll();
         System.out.println(orders);
         model.addAttribute("orders", orders);

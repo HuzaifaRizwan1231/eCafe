@@ -33,7 +33,8 @@ public class UserController {
     }
 
     @PostMapping("/loggingIn")
-    public String loginUser(@ModelAttribute("user") User user, Model model, HttpServletRequest request, HttpServletResponse response) {
+    public String loginUser(@ModelAttribute("user") User user, Model model, HttpServletRequest request,
+            HttpServletResponse response) {
         try {
             // Retrieve the user input from the login form
             String email = user.getEmail();
@@ -64,8 +65,8 @@ public class UserController {
                             return "redirect:/";
                         }
                     } else {
-                    model.addAttribute("message", "Check your role again");
-                    return "LoginRegister";
+                        model.addAttribute("message", "Check your role again");
+                        return "LoginRegister";
                     }
                 } else {
                     model.addAttribute("message", "Incorrect password");
@@ -81,7 +82,7 @@ public class UserController {
             return "error";
         }
     }
-  
+
     @GetMapping("/adminpanel")
     public String adminPage(Model model) {
         model.addAttribute("user", new User());
@@ -94,7 +95,6 @@ public class UserController {
         return "addManager";
     }
 
-
     @GetMapping("/adminpanel/addClerk")
     public String addClerkForm(Model model) {
         model.addAttribute("user", new User());
@@ -103,35 +103,47 @@ public class UserController {
 
     // FUNCTIONS TO ADD MANAGER AND CLERK
     @PostMapping("/adminpanel/addManager")
-    public String addManager(@RequestParam String name, @RequestParam long contact, 
-                             @RequestParam String email, @RequestParam String password, 
-                             @RequestParam String address) {
-        User user = new User();
-        user.setName(name);
-        user.setContact(contact);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setAddress(address);
-        user.setRole("Manager");
-        userRepository.save(user);
-        return "redirect:/adminpanel/Manager";
+    public String addManager(@RequestParam String name, @RequestParam long contact,
+            @RequestParam String email, @RequestParam String password,
+            @RequestParam String address, Model model) {
+
+        try {
+            User user = new User();
+            user.setName(name);
+            user.setContact(contact);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setAddress(address);
+            user.setRole("Manager");
+            userRepository.save(user);
+            model.addAttribute("error", "Successfull!");
+            return "viewAllManagers";
+        } catch (Exception e) {
+            model.addAttribute("error", "Something went wrong");
+            return "addManager";
+        }
     }
 
     @PostMapping("/adminpanel/addClerk")
-    public String addClerk(@RequestParam String name, @RequestParam long contact, 
-                           @RequestParam String email, @RequestParam String password, 
-                           @RequestParam String address) {
-        User user = new User();
-        user.setName(name);
-        user.setContact(contact);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setAddress(address);
-        user.setRole("Clerk");
-        userRepository.save(user);
-        return "redirect:/adminpanel/Clerk";
+    public String addClerk(@RequestParam String name, @RequestParam long contact,
+            @RequestParam String email, @RequestParam String password,
+            @RequestParam String address, Model model) {
+        try {
+            User user = new User();
+            user.setName(name);
+            user.setContact(contact);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setAddress(address);
+            user.setRole("Clerk");
+            userRepository.save(user);
+            model.addAttribute("error", "Successfull!");
+            return "addClerk";
+        } catch (Exception e) {
+            model.addAttribute("error", "Something went wrong");
+            return "addClerk";
+        }
     }
-
 
     // FUNCTIONS TO VIEW MANAGERS AND CLERKS
     @GetMapping("/adminpanel/viewAllManagers")
@@ -139,8 +151,8 @@ public class UserController {
         try {
             List<User> allUsers = userRepository.findAll();
             List<User> managers = allUsers.stream()
-                                          .filter(user -> "Manager".equals(user.getRole()))
-                                          .collect(Collectors.toList());
+                    .filter(user -> "Manager".equals(user.getRole()))
+                    .collect(Collectors.toList());
             model.addAttribute("managers", managers);
             return "Manager";
         } catch (Exception error) {
@@ -155,8 +167,8 @@ public class UserController {
         try {
             List<User> allUsers = userRepository.findAll();
             List<User> clerks = allUsers.stream()
-                                        .filter(user -> "Clerk".equals(user.getRole()))
-                                        .collect(Collectors.toList());
+                    .filter(user -> "Clerk".equals(user.getRole()))
+                    .collect(Collectors.toList());
             model.addAttribute("clerks", clerks);
             return "Clerk";
         } catch (Exception error) {
@@ -182,6 +194,7 @@ public class UserController {
     @GetMapping("/adminpanel/deleteClerk/{UserId}")
     public String deleteClerk(@PathVariable("UserId") Integer UserId) {
         try {
+            System.out.println(UserId);
             userRepository.findById(UserId).ifPresent(userRepository::delete);
             return "redirect:/adminpanel/viewAllClerks";
         } catch (Exception error) {

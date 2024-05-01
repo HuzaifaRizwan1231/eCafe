@@ -34,11 +34,12 @@
     <table class="table">
       <thead>
         <tr>
-          <th scope="col">#</th>
+          <th scope="col">#ID</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Contact</th>
           <th scope="col">Password</th>
+          <th scope="col">Clerk</th>
           <th scope="col">Actions</th>
         </tr>
       </thead>
@@ -49,6 +50,7 @@
           <td th:text="${clerk.email}"></td>
           <td th:text="${clerk.contact}"></td>
           <td th:text="${clerk.password}"></td>
+          <td th:text="${clerk.address}"></td>
           <td>
             <a class="btn btn-danger" th:href="'/adminpanel/deleteClerk/'+ ${clerk.userId}">Delete</a>
           </td>
