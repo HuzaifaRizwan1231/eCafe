@@ -1,0 +1,59 @@
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f5eded;
+  }
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e8dabf;
+    padding: 30px;
+    border: 2px solid #b7985b;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px #ead8b3;
+    z-index: 9999;
+    width: 80%;
+    max-width: 500px;
+  }
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: rgb(191, 152, 75);
+    font-size: 24px;
+  }
+  .close:hover {
+    color: #b27d12;
+  }
+  h2 {
+    color: #58441c;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .form-label {
+    color: #58441c;
+    font-size: 18px;
+  }
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .btn {
+    background-color:#9a783d;
+    color: linear-gradient(to right, #dda32e, #795517);
+    padding: 12px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #e1b873;;
+  }
