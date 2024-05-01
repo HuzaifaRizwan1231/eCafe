@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Log in</title>
+    <title>Register</title>
     <link rel="stylesheet" th:href="@{/css/LoginRegister.css}" />
 
     <style>
@@ -14,21 +15,27 @@
     <div class="hero">
       <div class="form-box">
         <div class="Welcome">
-            <h2>Log-In</h2>
+            <h2>Register</h2>
             <br><br>
           <h3>Welcome to the FAST-NUCES eCafe!</h3>
         </div>
-        <div >
-          <p style="font-size: 13px;margin: 5px;" role="alert" th:text="${message}">
-          </p>
+        <div>
+          <p style="font-size: 13px;margin: 5px;" role="alert" th:text="${message}"></p>
         </div>
         <form
-          id="login"
-          action="/loggingIn"
+          id="register"
+          action="/register"
           method="post"
           class="inputdata"
           th:object="${user}"
         >
+          <input
+            type="text"
+            class="inputfield"
+            placeholder="Enter Username"
+            required
+            th:field="*{username}"
+          />
           <input
             type="email"
             class="inputfield"
@@ -43,21 +50,17 @@
             required
             th:field="*{password}"
           />
-
-          <!-- Include the dropdown for selecting the user role -->
-          <select th:field="*{role}" class="role" required>
-            <option value="" selected disabled>Select Role</option>
-            <option value="Customer">Customer</option>
-            <option value="Admin">Admin</option>
-            <option value="Manager">Manager</option>
-            <option value="Clerk">Clerk</option>
-          </select>
-          <br/>
-          <input type="checkbox" class="check-box" />
-          <span>Remember Password</span>
-          <button type="submit" class="submit-btn">Log In</button>
+          <input
+            type="text"
+            class="inputfield"
+            placeholder="Enter Contact Number"
+            required
+            th:field="*{contactNumber}"
+          />
+          <br />
+          <button type="submit" class="submit-btn">Register</button>
         </form>
       </div>
-    </div> 
+    </div>
   </body>
 </html>
