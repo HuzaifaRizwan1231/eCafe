@@ -11,8 +11,7 @@ public class ECafeApplication {
 		SpringApplication.run(ECafeApplication.class, args);
 	}
 
-	/*@GetMapping("/")
-    public String home() {
-        return "index";
-    }*/
 }
+
+    
+

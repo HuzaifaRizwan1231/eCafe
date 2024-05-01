@@ -1,0 +1,52 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f5eded;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #b7985b;
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #e8dabf;
+    color: #58441c;
+}
+td {
+    background-color: #fff;
+    color: #58441c;
+}
+h1 {
+    color: #58441c;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+p {
+    color: #58441c;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.btn-cancel {
+    background-color: #9a783d;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+}
+.btn-cancel:hover {
+    background-color: #b27d12;
+}
