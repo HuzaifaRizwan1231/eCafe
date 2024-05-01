@@ -1,0 +1,73 @@
+<!-- card start -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="orderCard">
+    <div class="card" style="display: flex; border-radius: 5%">
+      <div style="padding: 10%">
+        <img
+          id="th:src=${products[i.index].image}"
+          src="/images/f2.png"
+          class="card-img-top"
+          alt="Product Image"
+        />
+      </div>
+      <div
+        class="card-body"
+        style="
+          background-color: #222831;
+          color: white;
+          border-bottom-left-radius: 5%;
+          border-bottom-right-radius: 5%;
+        "
+      >
+        <h5 class="card-title">
+          Order ID: <span th:text="${order.id}"></span>
+        </h5>
+        <p class="card-text">Date: <span th:text="${#dates.format(order.date, 'MMMM dd, yyyy')}"></span></p>
+        <p class="card-text">
+          Status:
+          <span
+            th:class="${order.status == 'Pending' ? 'bg-warning badge' : (order.status == 'Completed' ? 'bg-success badge' : 'bg-danger badge')}"
+            style="color: #222831; padding: 5px"
+            th:text="${order.status}"
+          ></span>
+        </p>
+        <p class="card-text">
+          Product Name: <span th:text="${products[i.index].name}"></span>
+        </p>
+        <p class="card-text">
+          Product Price: <span th:text="'Rs. ' + ${order.productPrice}"></span>
+        </p>
+        <p class="card-text">
+          Quantity: <span th:text="${order.quantity}"></span>
+        </p>
+        <p class="card-text">
+          Total Bill:
+          <span
+            th:text="'Rs. ' + ${order.productPrice * order.quantity}"
+          ></span>
+        </p>
+
+        <p class="card-text">
+          Pickup Time: <span th:text="${order.pickupTime}"></span>
+        </p>
+        <p class="card-text">
+          Payment Method: <span th:text="${order.paymentMethod}"></span>
+        </p>
+        <div
+          class="d-flex justify-content-end"
+          th:if="${order.status == 'Pending'}"
+        >
+          <form th:action="@{/orders/cancel}" method="post">
+            <input type="checkbox" id="confirmationCheckbox" th:onchange="var checkbox = document.getElementById('confirmationCheckbox');var cancelButton = document.getElementById('cancelButton');cancelButton.disabled = !checkbox.checked;">
+            <input type="hidden" name="orderId" th:value="${order.id}" />
+            <button type="submit" class="btn btn-danger m-1" id="cancelButton" disabled>Cancel</button>
+          </form>
+          <a th:href="@{/orders/edit(orderId=${order.id})}">
+            <button type="button" class="btn btn-info m-1">Edit</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- card end -->
+</html>

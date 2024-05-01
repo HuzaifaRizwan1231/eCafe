@@ -1,25 +1,13 @@
-<!DOCTYPE html>
+<!-- card start -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-    </style>
-  </head>
-  <body>
-    <!-- card start -->
-    <div
-      th:fragment="foodCard"
-      class="card m-2"
-      style="width: 22rem; border-radius: 1rem"
-    >
+  <div th:fragment="foodCard">
+    <div class="card m-2" style="width: 22rem; border-radius: 1rem">
       <div
         class="d-flex justify-content-center p-auto py-2 bg"
         style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0"
       >
         <img
-          src="images/f2.png"
+          src="/images/f2.png"
           class="card-img-top img-fluid w-50 my-2"
           alt="..."
         />
@@ -28,19 +16,20 @@
         class="card-body text-light"
         style="background-color: #222831; border-radius: 0 0 1rem 1rem"
       >
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </p>
+        <h5 class="card-title" th:text="${product.Name}"></h5>
+        <p class="card-text" th:text="${product.Description}"></p>
         <div class="d-flex justify-content-between align-items-center">
-          <span>$20</span>
-          <div class="bg-warning rounded-circle p-2 cursor-pointer">
-            <img src="images/cart.png" style="width: 2rem" class="cartBtn" />
-          </div>
+          <span th:text="'Rs. ' + ${product.price}"></span>
+          <a
+            th:href="@{'/productdetails/' + ${product.ID}}"
+          >
+            <div class="bg-warning rounded-circle p-2 cursor-pointer">
+              <img src="/images/cart.png" style="width: 2rem" class="cartBtn" />
+            </div>
+          </a>
         </div>
       </div>
     </div>
-    <!-- card end -->
-  </body>
+  </div>
+  <!-- card end -->
 </html>

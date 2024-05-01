@@ -6,7 +6,9 @@ html
 body
 {
     font-family: 'Caveat', cursive;
-    background-image: url("/images/oginbackground.png");
+
+    background-image: url("/images/loginbackground.png");
+
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -28,7 +30,7 @@ body
   width: 400px;
   height: 540px;
   position: relative;
-  margin: 6% auto;
+  margin: 31px auto;
   background: #f0d2a2;
   padding: 5px;
   overflow: hidden;
