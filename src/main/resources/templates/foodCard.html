@@ -21,6 +21,14 @@
         <div class="d-flex justify-content-between align-items-center">
           <span th:text="'Rs. ' + ${product.price}"></span>
           <a
+            th:href="@{'/feedback/' + ${product.ID}}"
+          >
+            <div class="bg-warning rounded-circle p-2 cursor-pointer">
+              Feedback
+              <img src="/" style="width: 2rem" class="cartBtn" />
+            </div>
+          </a>
+          <a
             th:href="@{'/productdetails/' + ${product.ID}}"
           >
             <div class="bg-warning rounded-circle p-2 cursor-pointer">
