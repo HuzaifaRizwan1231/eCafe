@@ -28,6 +28,42 @@ public class Orders{
     @Column(name = "Date")
     private Date Date;
 
+    public void setId(Integer id) {
+        Id = id;
+    }
+
+    public void setProductId(Integer productId) {
+        ProductId = productId;
+    }
+
+    public void setUserId(Integer userId) {
+        UserId = userId;
+    }
+
+    public void setQuantity(Integer quantity) {
+        Quantity = quantity;
+    }
+
+    public void setProductPrice(Integer productPrice) {
+        ProductPrice = productPrice;
+    }
+
+    public void setDate(Date date) {
+        Date = date;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        PaymentMethod = paymentMethod;
+    }
+
+    public void setPickupTime(Time pickupTime) {
+        PickupTime = pickupTime;
+    }
+
     @Column(name = "Status")
     private String Status;
 
@@ -37,77 +73,44 @@ public class Orders{
     @Column(name = "PickupTime")
     private Time PickupTime;
 
-    // Getters and setters...
-
     public Integer getId() {
         return Id;
-    }
-
-    public void setId(Integer id) {
-        Id = id;
     }
 
     public Integer getProductId() {
         return ProductId;
     }
 
-    public void setProductId(Integer productId) {
-        ProductId = productId;
-    }
-
     public Integer getUserId() {
         return UserId;
-    }
-
-    public void setUserId(Integer userId) {
-        UserId = userId;
     }
 
     public Integer getQuantity() {
         return Quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        Quantity = quantity;
-    }
-
     public Integer getProductPrice() {
         return ProductPrice;
     }
 
-    public void setProductPrice(Integer productPrice) {
-        ProductPrice = productPrice;
-    }
 
     public Date getDate() {
         return Date;
     }
 
-    public void setDate(Date date) {
-        Date = date;
-    }
 
     public String getStatus() {
         return Status;
     }
 
-    public void setStatus(String status) {
-        Status = status;
-    }
 
     public String getPaymentMethod() {
         return PaymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        PaymentMethod = paymentMethod;
     }
 
     public Time getPickupTime() {
         return PickupTime;
     }
 
-    public void setPickupTime(Time pickupTime) {
-        PickupTime = pickupTime;
-    }
+
 }

@@ -6,7 +6,7 @@ html
 body
 {
     font-family: 'Caveat', cursive;
-    background-image: url("eCafe\\src\\main\\resources\\static\\images\\loginbackground.png");
+    background-image: url("/images/loginbackground.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -19,7 +19,7 @@ body
 .hero{
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(rgba(173, 154, 112, 0.822), rgba(183, 161, 124, 0.4)),url("eCafe\\src\\main\\resources\\static\\images\\loginbackground.png");
+  background-image: linear-gradient(rgba(173, 154, 112, 0.822), rgba(183, 161, 124, 0.4)),url("/images/loginbackground.png");
   background-position: center;
   background-size: cover;
   position: absolute;
@@ -28,7 +28,7 @@ body
   width: 400px;
   height: 540px;
   position: relative;
-  margin: 6% auto;
+  margin: 31px auto;
   background: #f0d2a2;
   padding: 5px;
   overflow: hidden;

@@ -27,6 +27,11 @@ public interface OrderRepository extends JpaRepository<Orders, Integer> {
     @Query("UPDATE Orders o SET o.Status = 'Completed' WHERE o.ID = :Id")
     void updateOrderStatusToCompleted(@Param("Id") int Id);
 
+    @Query("SELECT o FROM Orders o WHERE o.UserId = :UserId AND o.Status = 'Pending'")
+    List<Orders> findPendingOrdersByUserId(Integer UserId);
+
+    @Query("SELECT o, p FROM Orders o JOIN Product p ON o.ProductId = p.ID WHERE o.UserId = :userId ORDER BY o.Date DESC")
+    List<Object[]> findOrdersWithProductByUserId(@Param("userId") Integer userId);
 
 
 }

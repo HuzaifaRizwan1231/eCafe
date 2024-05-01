@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" type="" />
+
+    <title>eCafé</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+
+    <!-- Owl Carousel stylesheet -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- Nice Select CSS -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- Font Awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- Responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="hero_area">
+      <div class="bg-box">
+        <img th:src="@{/hero-bg.jpg}" alt="" />
+      </div>
+      <!-- Header section starts -->
+      <div th:replace="navbar :: navbar"></div>
+      <!-- End header section -->
+      <!-- Slider section -->
+      <div th:replace="slider :: slider"></div>
+      <!-- End slider section -->
+    </div>
+
+    <!-- Edit Order section start -->
+    <div class="container mt-5 mb-5">
+      <h2 class="m-2">Edit Order</h2>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Order Details</h5>
+          <!-- Display order details -->
+          <p>Order ID: <span th:text="${order.id}"></span></p>
+          <p>Date: <span th:text="${#dates.format(order.date, 'MMMM dd, yyyy')}"></span></p>
+          <p>Status: <span th:text="${order.status}"></span></p>
+          <!-- <p>Product Name: <span th:text="${productName}"></span></p> -->
+          <p>
+            Product Price:
+            <span th:text="'Rs. ' + ${order.productPrice}"></span>
+          </p>
+          <p>
+            Quantity:
+            <span th:text="'Rs. ' + ${order.quantity}"></span>
+          </p>
+          <p>
+            Total Bill:
+            <span
+              th:text="'Rs. ' + ${order.productPrice * order.quantity}"
+            ></span>
+          </p>
+
+          <!-- Form to edit order details -->
+          <form action="/orders/update" method="post" id="editOrderForm">
+            <input type="hidden" name="orderId" th:value="${order.id}" />
+            <div class="form-group">
+              <label for="pickupTime">Pickup Time:</label>
+              <span th:text="${order.pickupTime}"></span>
+              <input
+                type="time"
+                class="form-control"
+                id="pickupTime"
+                name="pickupTime"
+                th:value="${#dates.format(order.pickupTime, 'HH:mm')}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="paymentMethod">Payment Method:</label>
+              <select
+                class="form-control"
+                id="paymentMethod"
+                name="paymentMethod"
+                required
+              >
+                <option
+                  th:value="Cash"
+                  th:selected="${order.paymentMethod == 'Cash'}"
+                >
+                  Cash
+                </option>
+                <option
+                  th:value="Online"
+                  th:selected="${order.paymentMethod == 'Online'}"
+                >
+                  Online
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="quantity"
+                name="quantity"
+                th:value="${order.quantity}"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Update Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Edit Order section end -->
+
+    <!-- jQuery -->
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <!-- Popper.js -->
+    <script
+      th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap JS -->
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <!-- Owl Carousel -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+    ></script>
+    <!-- Isotope JS -->
+    <script
+      th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
+    ></script>
+    <!-- Nice Select -->
+    <script
+      th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+    ></script>
+    <!-- Custom JS -->
+    <script th:src="@{/js/custom.js}"></script>
+    <!-- Google Map -->
+    <script
+      th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
+    ></script>
+    <!-- End Google Map -->
+  </body>
+</html>
