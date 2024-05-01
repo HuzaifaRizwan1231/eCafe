@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/FeedbackForm.css}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+</head>
+<body>
+
+<div class="popup" id="feedbackPopup">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <h2>Feedback</h2>
+    <div class="mb-4 small">
+        Please provide your valuable feedback.
+    </div>
+    <br>
+    <form name="feedback_form" id="feedback_form" method="post" th:action="@{/submitFeedback}">
+        <div class="mb-4">
+            <label class="form-label" for="feedback_comments">Feedback:</label>
+            <textarea class="form-control" required rows="6" name="text" id="feedback_comments"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success btn-lg">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var popup = document.getElementById('feedbackPopup');
+        popup.style.display = 'block';
+    });
+
+    function closePopup() {
+        var popup = document.getElementById('feedbackPopup');
+        popup.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
