@@ -14,6 +14,8 @@
   <body>
     <div class="hero">
       <div class="form-box">
+        <a href="/" class="close">&times;</a>
+
         <div class="Welcome">
             <h2>Register</h2>
             <br><br>
@@ -65,8 +67,13 @@
             required
             th:field="*{address}"
           />
-          <br />
+          <br/>
+          <br>
           <button type="submit" class="submit-btn">Register</button>
+          <br>
+          <p>Already have account? </p>
+          <a  class="register-link" href="/login" >Login Here</a>
+
         </form>
       </div>
     </div>
