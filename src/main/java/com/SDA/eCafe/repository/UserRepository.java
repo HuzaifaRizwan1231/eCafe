@@ -1,5 +1,4 @@
 package com.SDA.eCafe.repository;
-
 import com.SDA.eCafe.model.User;
 
 import org.springframework.data.jdbc.repository.query.Query;
@@ -18,3 +17,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.Email = :email")
     Optional<User> findByEmail(@Param("email") String email);
 }
+
