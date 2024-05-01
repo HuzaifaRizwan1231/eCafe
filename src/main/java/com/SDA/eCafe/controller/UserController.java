@@ -26,6 +26,25 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    public String getRoleFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer userId = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    userId = Integer.parseInt(cookie.getValue());
+                    break;
+                }
+            }
+            Optional<User> loggedInUser = userRepository.findById(userId);
+            if (!loggedInUser.isEmpty()) {
+                System.out.println(loggedInUser.get().getRole());
+                return loggedInUser.get().getRole();
+            }
+        }
+        return "noUser";
+    }
+
     @GetMapping("/login")
     public String showLoginForm(Model model) {
         model.addAttribute("user", new User());
@@ -40,9 +59,6 @@ public class UserController {
             String email = user.getEmail();
             String password = user.getPassword();
             String role = user.getRole();
-            System.out.println(email);
-            System.out.println(password);
-            System.out.println(role);
             // Check if a user with the provided email exists in the database
             Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -55,15 +71,16 @@ public class UserController {
                         int userId = storedUser.getUserId();
                         Cookie cookie = new Cookie("userId", String.valueOf(userId));
                         response.addCookie(cookie);
-                        if (role == "Admin") {
-                            return "redirect:/admin";
-                        } else if (role == "Clerk") {
+                        if ("Admin".equals(role)) {
+                            return "redirect:/adminpanel";
+                        } else if ("Clerk".equals(role)) {
                             return "redirect:/clerk";
-                        } else if (role == "Manager") {
+                        } else if ("Manager".equals(role)) {
                             return "redirect:/manager";
                         } else {
                             return "redirect:/";
                         }
+
                     } else {
                         model.addAttribute("message", "Check your role again");
                         return "LoginRegister";
@@ -84,122 +101,157 @@ public class UserController {
     }
 
     @GetMapping("/adminpanel")
-    public String adminPage(Model model) {
-        model.addAttribute("user", new User());
-        return "adminPanel";
+    public String adminPage(Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            model.addAttribute("user", new User());
+            return "redirect:/adminpanel/viewAllManagers";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/adminpanel/addManager")
-    public String addManagerForm(Model model) {
-        model.addAttribute("user", new User());
-        return "addManager";
+    public String addManagerForm(Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            model.addAttribute("user", new User());
+            return "addManager";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/adminpanel/addClerk")
-    public String addClerkForm(Model model) {
-        model.addAttribute("user", new User());
-        return "addClerk";
+    public String addClerkForm(Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            model.addAttribute("user", new User());
+            return "addClerk";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     // FUNCTIONS TO ADD MANAGER AND CLERK
     @PostMapping("/adminpanel/addManager")
     public String addManager(@RequestParam String name, @RequestParam long contact,
             @RequestParam String email, @RequestParam String password,
-            @RequestParam String address, Model model) {
-
-        try {
-            User user = new User();
-            user.setName(name);
-            user.setContact(contact);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setAddress(address);
-            user.setRole("Manager");
-            userRepository.save(user);
-            model.addAttribute("error", "Successfull!");
-            return "viewAllManagers";
-        } catch (Exception e) {
-            model.addAttribute("error", "Something went wrong");
-            return "addManager";
+            @RequestParam String address, Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                User user = new User();
+                user.setName(name);
+                user.setContact(contact);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setAddress(address);
+                user.setRole("Manager");
+                userRepository.save(user);
+                model.addAttribute("error", "Successfull!");
+                return "Manager";
+            } catch (Exception e) {
+                model.addAttribute("error", "Something went wrong");
+                return "addManager";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 
     @PostMapping("/adminpanel/addClerk")
     public String addClerk(@RequestParam String name, @RequestParam long contact,
             @RequestParam String email, @RequestParam String password,
-            @RequestParam String address, Model model) {
-        try {
-            User user = new User();
-            user.setName(name);
-            user.setContact(contact);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setAddress(address);
-            user.setRole("Clerk");
-            userRepository.save(user);
-            model.addAttribute("error", "Successfull!");
-            return "addClerk";
-        } catch (Exception e) {
-            model.addAttribute("error", "Something went wrong");
-            return "addClerk";
+            @RequestParam String address, Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                User user = new User();
+                user.setName(name);
+                user.setContact(contact);
+                user.setEmail(email);
+                user.setPassword(password);
+                user.setAddress(address);
+                user.setRole("Clerk");
+                userRepository.save(user);
+                model.addAttribute("error", "Successfull!");
+                return "addClerk";
+            } catch (Exception e) {
+                model.addAttribute("error", "Something went wrong");
+                return "addClerk";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 
     // FUNCTIONS TO VIEW MANAGERS AND CLERKS
     @GetMapping("/adminpanel/viewAllManagers")
-    public String getManagers(Model model) {
-        try {
-            List<User> allUsers = userRepository.findAll();
-            List<User> managers = allUsers.stream()
-                    .filter(user -> "Manager".equals(user.getRole()))
-                    .collect(Collectors.toList());
-            model.addAttribute("managers", managers);
-            return "Manager";
-        } catch (Exception error) {
-            System.out.println("-------------------------------------------------");
-            System.out.println(error.getMessage());
-            return "error";
+    public String getManagers(Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                List<User> allUsers = userRepository.findAll();
+                List<User> managers = allUsers.stream()
+                        .filter(user -> "Manager".equals(user.getRole()))
+                        .collect(Collectors.toList());
+                model.addAttribute("managers", managers);
+                return "Manager";
+            } catch (Exception error) {
+                System.out.println("-------------------------------------------------");
+                System.out.println(error.getMessage());
+                return "error";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 
     @GetMapping("/adminpanel/viewAllClerks")
-    public String getClerks(Model model) {
-        try {
-            List<User> allUsers = userRepository.findAll();
-            List<User> clerks = allUsers.stream()
-                    .filter(user -> "Clerk".equals(user.getRole()))
-                    .collect(Collectors.toList());
-            model.addAttribute("clerks", clerks);
-            return "Clerk";
-        } catch (Exception error) {
-            System.out.println("-------------------------------------------------");
-            System.out.println(error.getMessage());
-            return "error";
+    public String getClerks(Model model, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                List<User> allUsers = userRepository.findAll();
+                List<User> clerks = allUsers.stream()
+                        .filter(user -> "Clerk".equals(user.getRole()))
+                        .collect(Collectors.toList());
+                model.addAttribute("clerks", clerks);
+                return "Clerk";
+            } catch (Exception error) {
+                System.out.println("-------------------------------------------------");
+                System.out.println(error.getMessage());
+                return "error";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 
     // FUNCTIONS TO DELETE MANAGER AND CLERK
     @GetMapping("/adminpanel/deleteManager/{UserId}")
-    public String deleteManager(@PathVariable("UserId") Integer UserId) {
-        try {
-            userRepository.findById(UserId).ifPresent(userRepository::delete);
-            return "redirect:/adminpanel/viewAllManagers";
-        } catch (Exception error) {
-            System.out.println("-------------------------------------------------");
-            System.out.println(error.getMessage());
-            return "error";
+    public String deleteManager(@PathVariable("UserId") Integer UserId, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                userRepository.findById(UserId).ifPresent(userRepository::delete);
+                return "redirect:/adminpanel/viewAllManagers";
+            } catch (Exception error) {
+                System.out.println("-------------------------------------------------");
+                System.out.println(error.getMessage());
+                return "error";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 
     @GetMapping("/adminpanel/deleteClerk/{UserId}")
-    public String deleteClerk(@PathVariable("UserId") Integer UserId) {
-        try {
-            System.out.println(UserId);
-            userRepository.findById(UserId).ifPresent(userRepository::delete);
-            return "redirect:/adminpanel/viewAllClerks";
-        } catch (Exception error) {
-            System.out.println(error.getMessage());
-            return "error";
+    public String deleteClerk(@PathVariable("UserId") Integer UserId, HttpServletRequest request) {
+        if ("Admin".equals(getRoleFromCookies(request))) {
+            try {
+                System.out.println(UserId);
+                userRepository.findById(UserId).ifPresent(userRepository::delete);
+                return "redirect:/adminpanel/viewAllClerks";
+            } catch (Exception error) {
+                System.out.println(error.getMessage());
+                return "error";
+            }
+        } else {
+            return "redirect:/login";
         }
     }
 

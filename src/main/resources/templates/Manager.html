@@ -61,78 +61,7 @@
           </tr>
         </tbody>
       </table>
-      <button
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#addManagerModal"
-      >
-        + Add user
-      </button>
-    </div>
-    <!-- Modal for Adding Manager -->
-    <!-- Add Clerk Modal Start-->
-    <div
-      class="modal fade"
-      id="addManagerModal"
-      tabindex="0"
-      role="dialog"
-      aria-labelledby="addManagerModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addManagerModalLabel">Add to Cart</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form id="addManagerForm" method="post">
-              <label for="quantity">Quantity:</label>
-              <input
-                type="number"
-                id="quantity"
-                name="quantity"
-                class="form-control"
-                value="1"
-                min="1"
-              />
-            </form>
-          </div>
-          <div class="modal-footer">
-            <!-- <button
-          type="button"
-          class="btn btn-warning font-weight-bold text-white"
-          onclick="document.getElementById('addManagerForm').submit()"
-        >
-          Add to Cart
-        </button> -->
-            <button
-              type="button"
-              class="btn btn-warning font-weight-bold text-white"
-              id="addManagerBtn"
-            >
-              Add to Cart
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Add Manager Modal End -->
-
+    
     <!-- jQery -->
     <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
     <!-- popper js -->

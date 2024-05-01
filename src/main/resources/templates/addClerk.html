@@ -48,6 +48,7 @@
     </style>
   </head>
   <body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
     <div class="container">
       <h2 class="text-center mb-4">Clerk Registration Form</h2>
       <div th:if="${error}" class="error-message" th:text="${error}"></div>
