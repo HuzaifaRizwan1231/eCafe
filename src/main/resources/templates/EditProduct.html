@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Product</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input,
+      button {
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Edit Product</h2>
+      <form
+        th:action="@{'/ManageMenu/' + ${ID}}"
+        method="post"
+        th:object="${product}"
+      >
+        <input type="text" required th:field="*{Name}" placeholder="Product Name" />
+        <input
+          type="text"
+          required
+          th:field="*{Description}"
+          placeholder="Product Description"
+        />
+        <div class="dropdown">
+          <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status" required>
+              <option
+                th:value="available"
+                th:selected="${product.Status == 'available'}"
+              >
+                Available
+              </option>
+              <option
+                th:value="unavailable"
+                th:selected="${product.Status == 'unavailable'}"
+              >
+                Unavailable
+              </option>
+            </select>
+          </div>
+        </div>
+        <label for="Price">Price</label>
+        <input type="number" th:field="*{Price}" required placeholder="Product Price" />
+        <!-- <input type="text" th:field="*{Category}" placeholder="Product Category"/> -->
+        <select th:field="*{Category}" required>
+          <option value="Fast Food">Fast Food</option>
+          <option value="Desi Food">Desi Food</option>
+          <option value="Cold Drinks">Cold Drinks</option>
+          <option value="Hot Drinks">Hot Drinks</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

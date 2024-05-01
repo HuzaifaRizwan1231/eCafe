@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h2 th:text="${product.Name}"></h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img th:src="${product.Image}" class="img-fluid" alt="Product Image">
+                    </div>
+                    <div class="col-md-8">
+                        <p th:text="${product.Description}"></p>
+                        <p th:text="'Status: ' + ${product.Status}"></p>
+                        <p th:text="'Price: $' + ${product.Price}"></p>
+                        <p th:text="'Category: ' + ${product.Category}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="/CurrentOrders" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS (Optional, only if you need Bootstrap JavaScript features) -->
+</body>
+</html>
