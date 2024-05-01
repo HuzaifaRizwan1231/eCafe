@@ -2,11 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" th:href="@{/css/FeedbackForm.css}" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback Form</title>
 </head>
 <body>
+
+ <!-- header section strats -->
+ <section style="background-color: #0d0e10 !important">
+    <div th:replace="navbar :: navbar"></div>
+  </section>
+  <!-- end header section -->
 
 <div class="popup" id="feedbackPopup">
     <span class="close" onclick="closePopup()">&times;</span>
@@ -15,13 +44,13 @@
         Please provide your valuable feedback.
     </div>
     <br>
-    <form name="feedback_form" id="feedback_form" method="post" th:action="@{/submitFeedback}">
+    <form name="feedback_form" id="feedback_form" method="post" th:object="${feedback}" th:action="@{/submitFeedback}">
         <!-- Hidden productid field -->
-        <input type="hidden" name="productid" value="YOUR_PRODUCT_ID_HERE">
+        <input type="hidden" th:field="*{productID}" name="productid" >
         
         <div class="mb-4">
             <label class="form-label" for="feedback_comments">Feedback:</label>
-            <textarea class="form-control" required rows="6" name="text" id="feedback_comments"></textarea>
+            <textarea th:field="*{text}" class="form-control" required rows="6" name="text" id="feedback_comments"></textarea>
         </div>
         <br>
         <button type="submit" class="btn btn-success btn-lg">Submit</button>

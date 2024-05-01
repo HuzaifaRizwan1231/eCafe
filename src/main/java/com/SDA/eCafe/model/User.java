@@ -60,6 +60,11 @@ public class User {
 
     // Constructor
     public User() {
+        // setEmail("");
+        // setName("");
+        // setPassword("");
+        // setContact(0);
+        // setAddress("");
     }
 
     public void setUserId(Integer userId) {

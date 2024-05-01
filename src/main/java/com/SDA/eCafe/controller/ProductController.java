@@ -134,18 +134,5 @@ public class ProductController {
     }
 
 
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        try {
-            return "LoginRegister";
-        }catch(Exception error){
-
-
-            return "error";
-        }
-    }
-
-
 }
 

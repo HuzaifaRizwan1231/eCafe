@@ -40,6 +40,7 @@ public class UserController {
             Optional<User> existingUser = userRepository.findByEmail(email);
 
             if (existingUser.isPresent()) {
+
                 // User exists, check if the password matches
                 User storedUser = existingUser.get();
                 if (storedUser.getPassword().equals(password)) {
@@ -80,14 +81,12 @@ public class UserController {
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/registerUser")
     public String registerUser(@ModelAttribute("user") User user, BindingResult result, Model model) {
         // Validate user input
         try {
             // Setters in the User model will throw exceptions if data is invalid
-            user.setEmail(user.getEmail()); // This triggers email validation
-            user.setContact(user.getContact()); // This triggers contact validation
-            user.setPassword(user.getPassword()); // This triggers password validation
+            user.setRole("Customer");
         } catch (IllegalArgumentException e) {
             // If validation fails, return to registration form with error messages
             model.addAttribute("error", e.getMessage());
@@ -98,6 +97,6 @@ public class UserController {
         userRepository.save(user);
 
         // Redirect to login page after successful registration
-        return "redirect:/login";
+        return "redirect:/";
     }
 }
