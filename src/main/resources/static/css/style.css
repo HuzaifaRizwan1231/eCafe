@@ -6,6 +6,22 @@ body {
   overflow-x: hidden;
 }
 
+.image-container{
+  height: 250px;
+  width: 100%;
+}
+
+.image-section{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.image-container-details{
+  height: 350px;
+  width: 100%;
+}
+
 .layout_padding {
   padding: 90px 0;
 }

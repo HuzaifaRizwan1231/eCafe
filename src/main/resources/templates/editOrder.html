@@ -41,17 +41,11 @@
     <link th:href="@{/css/responsive.css}" rel="stylesheet" />
   </head>
   <body>
-    <div class="hero_area">
-      <div class="bg-box">
-        <img th:src="@{/hero-bg.jpg}" alt="" />
-      </div>
-      <!-- Header section starts -->
-      <div th:replace="navbar :: navbar"></div>
-      <!-- End header section -->
-      <!-- Slider section -->
-      <div th:replace="slider :: slider"></div>
-      <!-- End slider section -->
-    </div>
+    <!-- header section strats -->
+ <section style="background-color: #0d0e10 !important">
+  <div th:replace="navbar :: navbar"></div>
+</section>
+<!-- end header section -->
 
     <!-- Edit Order section start -->
     <div class="container mt-5 mb-5">

@@ -3,12 +3,12 @@
   <div th:fragment="foodCard">
     <div class="card m-2" style="width: 22rem; border-radius: 1rem">
       <div
-        class="d-flex justify-content-center p-auto py-2 bg"
+        class="d-flex justify-content-center p-auto py-2 image-container"
         style="background-color: #f1f2f3; border-radius: 1rem 1rem 0 0"
       >
         <img
-          src="/images/f2.png"
-          class="card-img-top img-fluid w-50 my-2"
+          th:src="'/images/'+${product.Image}"
+          class="card-img-top img-fluid  my-2 image-section"
           alt="..."
         />
       </div>
@@ -17,7 +17,7 @@
         style="background-color: #222831; border-radius: 0 0 1rem 1rem"
       >
         <h5 class="card-title" th:text="${product.Name}"></h5>
-        <p class="card-text" th:text="${product.Description}"></p>
+        <p class="card-text" th:text="${product.Description} + '...'"></p>
         <div class="d-flex justify-content-between align-items-center">
           <span th:text="'Rs. ' + ${product.price}"></span>
           <a

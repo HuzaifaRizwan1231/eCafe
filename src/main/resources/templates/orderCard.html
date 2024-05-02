@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <div th:fragment="orderCard">
     <div class="card" style="display: flex; border-radius: 5%">
-      <div style="padding: 10%">
+      <div class="image-container">
         <img
-          id="th:src=${products[i.index].image}"
-          src="/images/f2.png"
-          class="card-img-top"
-          alt="Product Image"
+          th:src="'/images/'+${products[i.index].Image}"
+          class="card-img-top img-fluid  my-2 image-section"
+          alt="..."
         />
       </div>
       <div

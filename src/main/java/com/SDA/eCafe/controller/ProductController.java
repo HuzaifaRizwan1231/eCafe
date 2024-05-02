@@ -67,6 +67,17 @@ public class ProductController {
     public String getLimitedProducts(Model model) {
         try {
             List<Product> products = productRepository.findAll();
+
+            // TRUNCATE PRODUCT DESCRIPTION
+            products = products.stream().map(product -> {
+                String description = product.getDescription();
+                if (description.length() > 33) {
+                    description = description.substring(0, 33);
+                }
+                product.setDescription(description);
+                return product;
+            }).collect(Collectors.toList());
+
             // Shuffle the list to get random order
             Collections.shuffle(products);
 
@@ -84,6 +95,18 @@ public class ProductController {
     public String getAllProducts(Model model) {
         try {
             List<Product> products = productRepository.findAll();
+            
+            // TRUNCATE PRODUCT DESCRIPTION
+            products = products.stream().map(product -> {
+                String description = product.getDescription();
+                if (description.length() > 33) {
+                    description = description.substring(0, 33);
+                }
+                product.setDescription(description);
+                return product;
+            }).collect(Collectors.toList());
+
+
             System.out.println(products);
             model.addAttribute("products", products);
             return "menuPageClient";

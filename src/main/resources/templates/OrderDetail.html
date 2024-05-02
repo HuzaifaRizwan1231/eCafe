@@ -38,12 +38,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <img th:src="${product.Image}" class="img-fluid" alt="Product Image">
+                        <img th:src="'/images/'+${product.Image}" class="img-fluid" alt="Product Image">
                     </div>
                     <div class="col-md-8">
                         <p th:text="${product.Description}"></p>
                         <p th:text="'Status: ' + ${product.Status}"></p>
-                        <p th:text="'Price: $' + ${product.Price}"></p>
+                        <p th:text="'Price: Rs. ' + ${product.Price}"></p>
                         <p th:text="'Category: ' + ${product.Category}"></p>
                     </div>
                 </div>

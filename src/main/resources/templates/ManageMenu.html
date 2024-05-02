@@ -121,21 +121,27 @@
     <div th:if="${product.empty}">
         <p>No products available for this category.</p>
     </div>
-    <div th:if="${not product.empty}" class="ml">
-        <div th:each="product : ${product}" class="product-container">
-            <div>
-                <h2 th:text="${product.Name}"></h2>
-                <p th:text="${product.Description}"></p>
-                <p>Price: <span th:text="${product.Price}"></span></p>
-                <p>Status: <span th:text="${product.Status}"></span></p>
-                <span class="mb">
-                    <a class="btn btn-primary" th:href="@{/editProduct/{id}(id=${product.ID})}">Edit Product</a>
-                    <form th:action="@{'/DeleteItem/' +${product.category} +'/' + ${product.ID}}" method="post" style="display: inline;">
-                        <button type="submit" class="btn btn-danger mar">Delete</button>
-                    </form>                </span>
-               </div>
-            <img th:src="@{/images/{imageName}(imageName=${product.Image})}" alt="Product Image" class="product-img">
-            <hr>
+    <div class="container">
+
+        <div th:if="${not product.empty}" class="row">
+            <div th:each="product : ${product}" class="product-container p-4 border-black mb-2 rounded-1  col-6 d-flex justify-content-between ">
+                    <div style="width: 60%;" class="my-auto">
+                        <h2 th:text="${product.Name}"></h2>
+                        <p th:text="${product.Description}"></p>
+                        <p>Price: <span th:text="${product.Price}"></span></p>
+                        <p>Status: <span th:text="${product.Status}"></span></p>
+                        <div class="mb d-flex ">
+                            <a class="btn btn-primary mx-2" th:href="@{/editProduct/{id}(id=${product.ID})}">Edit Product</a>
+                            <form th:action="@{'/DeleteItem/' +${product.category} +'/' + ${product.ID}}" method="post" class="mx-2">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                   <div style="width: 40%;" class="my-auto">
+                       <img th:src="@{/images/{imageName}(imageName=${product.Image})}" alt="Product Image" class="w-100 object-fit-contain ">
+                   </div>
+                <hr>
+            </div>
         </div>
     </div>
   
