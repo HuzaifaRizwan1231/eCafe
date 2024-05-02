@@ -128,6 +128,7 @@
                       placeholder="Enter minimum price"
                       min="0"
                       max="100000"
+                      value="0"
                     />
                   </div>
                   <div class="form-group">
@@ -140,6 +141,7 @@
                       placeholder="Enter maximum price"
                       min="0"
                       max="100000"
+                      value="100"
                     />
                   </div>
                   <button
@@ -158,6 +160,7 @@
       </div>
       <!-- apply filter modal end -->
 
+      <h2 th:if="${products.size()==0}" class="text-center mb-4">No Results Found</h2>
       <div class="row">
         <div th:each="product : ${products}">
           <div th:replace="foodCard :: foodCard"></div>

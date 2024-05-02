@@ -8,8 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -74,6 +80,114 @@ public class UserController {
             return "error";
         }
     }
+  
+    @GetMapping("/adminpanel")
+    public String adminPage(Model model) {
+        model.addAttribute("user", new User());
+        return "adminPanel";
+    }
+
+    @GetMapping("/adminpanel/Managers")
+    public String addManagerForm(Model model) {
+        model.addAttribute("user", new User());
+        return "addManager";
+    }
+
+
+    @GetMapping("/adminpanel/Clerks")
+    public String addClerkForm(Model model) {
+        model.addAttribute("user", new User());
+        return "addClerk";
+    }
+
+    // FUNCTIONS TO ADD MANAGER AND CLERK
+    @PostMapping("/adminpanel/addManager")
+    public String addManager(@RequestParam String name, @RequestParam long contact, 
+                             @RequestParam String email, @RequestParam String password, 
+                             @RequestParam String address) {
+        User user = new User();
+        user.setName(name);
+        user.setContact(contact);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setAddress(address);
+        user.setRole("Manager");
+        userRepository.save(user);
+        return "redirect:/adminpanel/Manager";
+    }
+
+    @PostMapping("/adminpanel/addClerk")
+    public String addClerk(@RequestParam String name, @RequestParam long contact, 
+                           @RequestParam String email, @RequestParam String password, 
+                           @RequestParam String address) {
+        User user = new User();
+        user.setName(name);
+        user.setContact(contact);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setAddress(address);
+        user.setRole("Clerk");
+        userRepository.save(user);
+        return "redirect:/adminpanel/Clerk";
+    }
+
+
+    // FUNCTIONS TO VIEW MANAGERS AND CLERKS
+    @GetMapping("/adminpanel/viewAllManagers")
+    public String getManagers(Model model) {
+        try {
+            List<User> allUsers = userRepository.findAll();
+            List<User> managers = allUsers.stream()
+                                          .filter(user -> "Manager".equals(user.getRole()))
+                                          .collect(Collectors.toList());
+            model.addAttribute("managers", managers);
+            return "Manager";
+        } catch (Exception error) {
+            System.out.println("-------------------------------------------------");
+            System.out.println(error.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/adminpanel/viewAllClerks")
+    public String getClerks(Model model) {
+        try {
+            List<User> allUsers = userRepository.findAll();
+            List<User> clerks = allUsers.stream()
+                                        .filter(user -> "Clerk".equals(user.getRole()))
+                                        .collect(Collectors.toList());
+            model.addAttribute("clerks", clerks);
+            return "Clerk";
+        } catch (Exception error) {
+            System.out.println("-------------------------------------------------");
+            System.out.println(error.getMessage());
+            return "error";
+        }
+    }
+
+    // FUNCTIONS TO DELETE MANAGER AND CLERK
+    @GetMapping("/adminpanel/deleteManager/{UserId}")
+    public String deleteManager(@PathVariable("UserId") Integer UserId) {
+        try {
+            userRepository.findById(UserId).ifPresent(userRepository::delete);
+            return "redirect:/adminpanel/viewAllManagers";
+        } catch (Exception error) {
+            System.out.println("-------------------------------------------------");
+            System.out.println(error.getMessage());
+            return "error";
+        }
+    }
+
+    @GetMapping("/adminpanel/deleteClerk/{UserId}")
+    public String deleteClerk(@PathVariable("UserId") Integer UserId) {
+        try {
+            userRepository.findById(UserId).ifPresent(userRepository::delete);
+            return "redirect:/adminpanel/viewAllClerks";
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+            return "error";
+        }
+    }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -100,3 +214,4 @@ public class UserController {
         return "redirect:/login";
     }
 }
+

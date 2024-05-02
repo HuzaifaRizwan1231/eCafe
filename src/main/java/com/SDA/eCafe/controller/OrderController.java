@@ -254,4 +254,57 @@ public class OrderController {
         return "error";
     }
     }
+
+
+    @GetMapping("/orderNow")
+    public String orderNow(
+        @RequestParam(value = "pId", required = true) Integer productId,
+        @RequestParam(value = "pPrice", required = true) Integer productPrice,
+        @RequestParam(value = "quantity", required = true) Integer quantity,
+        @RequestParam(value = "time", required = true) @DateTimeFormat(pattern = "HH:mm") LocalTime pickupTimeStr,
+        @RequestParam(value = "paymentMethod", required = true) String paymentMethod, HttpServletRequest request
+        ) {
+
+        // Functions for date time
+        Date date = new Date(System.currentTimeMillis());
+        Time pickupTime = Time.valueOf(pickupTimeStr);
+       
+        try{
+            // GET USER ID FROM COOKIES
+            Integer userId = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userId")) {
+                        userId = Integer.parseInt(cookie.getValue());
+                        break;
+                    }
+                }
+            }
+
+            
+            // NOW INSERTING THE ORDER BASED ON USER ID
+            if (userId != null) {
+                                  
+                // Instance of order
+                Orders order = new Orders();
+                order.setProductId(productId);
+                order.setUserId(userId);
+                order.setQuantity(quantity);
+                order.setProductPrice(productPrice);
+                order.setDate(date);
+                order.setStatus("Pending");
+                order.setPaymentMethod(paymentMethod);
+                order.setPickupTime(pickupTime);
+                orderRepository.save(order);
+            } else {
+                return "redirect:/login";
+            }
+            return "redirect:/orders";
+    }
+    catch (Exception error) {
+        System.out.println(error.getMessage());
+        return "error";
+    }
+    }
 }

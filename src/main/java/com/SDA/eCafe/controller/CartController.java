@@ -61,15 +61,20 @@ public class CartController {
                     List<Object[]> cartWithProducts = cartRepository.findCartOfProductByUserId(userId);
                     List<Cart> cartItems = new ArrayList<>();
                     List<Product> products = new ArrayList<>();
-        
+                    
+                    // Variable to send totalprice for items in cart
+                    Integer TotalPrice = 0;
+
                     for (Object[] result : cartWithProducts) {
                         Cart cartItem = (Cart) result[0];
                         Product product = (Product) result[1];
+                        TotalPrice += product.getPrice() * cartItem.getQuantity();
                         cartItems.add(cartItem);
                         products.add(product);
                     }
                     model.addAttribute("products", products);
                     model.addAttribute("cartItems", cartItems);
+                    model.addAttribute("TotalPrice", TotalPrice);
                 } else {
                     return "redirect:/login";
                 }

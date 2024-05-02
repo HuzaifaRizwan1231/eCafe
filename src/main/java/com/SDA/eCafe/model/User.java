@@ -2,13 +2,18 @@ package com.SDA.eCafe.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Time;
+import java.util.Date;
+
 @Entity
 @Table(name = "User")
-public class User {
+public class User{
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
+
     private Integer userId;
 
     @Column(name = "Name", nullable = false)
@@ -60,11 +65,6 @@ public class User {
 
     // Constructor
     public User() {
-        // setEmail("");
-        // setName("");
-        // setPassword("");
-        // setContact(0);
-        // setAddress("");
     }
 
     public void setUserId(Integer userId) {

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   var addToCartBtn = document.getElementById("addToCartBtn");
 
   addToCartBtn.addEventListener("click", function () {
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var responseText = xhr.responseText;
         if (responseText.includes("Success")) {
           alert("Product added to cart successfully!");
+          window.location.href = "/";
         } else {
           alert("Error adding product to cart. Please try again.");
         }
@@ -39,3 +41,4 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.send(JSON.stringify(data));
   });
 });
+
