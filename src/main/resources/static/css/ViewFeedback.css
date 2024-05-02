@@ -1,0 +1,62 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #f5eded;
+  }
+  .container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; 
+}
+
+.card {
+    width: calc(33.33% - 20px); /* Adjust the width based on your preference */
+    margin-bottom: 20px;
+    border: 10px solid #120d03; /* Darker border color */
+    border-radius: 20px;
+    background-color: #f2e9c9; /* Light background color */
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-body p {
+    margin-bottom: 15px;
+}
+
+.card-body p strong {
+    color: #58441c;
+    font-weight: bold; /* Make feedback text bold */
+    font-size: 18px; /* Adjust font size */
+}
+
+.btn-cancel {
+    background-color: #090601;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-cancel:hover {
+    background-color: #b27d12;
+}

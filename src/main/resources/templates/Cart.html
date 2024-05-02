@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" th:href="@{/images/favicon.png}" type="" />
+
+    <title>eCafé</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  </head>
+
+<body>
+ <!-- header section strats -->
+ <section style="background-color: #0d0e10 !important">
+    <div th:replace="navbar :: navbar"></div>
+  </section>
+  <!-- end header section -->
+
+
+<!-- cart section starts -->
+
+    <!-- cart section starts -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-xl-8">
+            <div th:each="cartItem, i : ${cartItems}">
+                <div th:replace="cartItemCard :: cartItemCard"></div>
+            </div>
+            <!-- end card -->
+
+
+            <div class="row my-4">
+                <div class="col-sm-6">
+                    <a href="/" class="btn btn-link text-muted">
+                        <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+                </div> <!-- end col -->
+                <div class="col-sm-6">
+                    <div class="text-sm-end mt-2 mt-sm-0">
+                        <h2 th:if="${cartItems.size() == 0}">No Items in the Cart</h2>
+                        <button  data-toggle="modal" id="proceed-for-payment"
+                        data-target="#placeOrderModal" th:if="${cartItems.size() > 0}" class="btn btn-success">
+                            <i class="mdi mdi-cart-outline me-1"></i> Proceed For Payment
+                        </button>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row-->
+        </div>
+
+        <div class="col-xl-4">
+            <div class="mt-5 mt-lg-0">
+                <div class="card border shadow-none">
+                    <div class="card-header bg-transparent border-bottom py-3 px-4">
+                        <h5 class="font-size-16 mb-0">Order Summary</h5>
+                    </div>
+                    <div class="card-body p-4 pt-2">
+
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <tbody>
+                                    
+                                    <tr class="bg-light">
+                                        <th>Total :</th>
+                                        <td class="text-end">
+                                          <span th:text="'Rs. '+${TotalPrice}" class="fw-bold">                                             
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+     <!-- Place Order Modal Start-->
+     <div
+     class="modal fade"
+     id="placeOrderModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="placeOrderModalLabel"
+     aria-hidden="true"
+   >
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="placeOrderModalLabel">Place Order</h5>
+           <button
+             type="button"
+             class="close"
+             data-dismiss="modal"
+             aria-label="Close"
+           >
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+            <h2 th:text="'TOTAL: Rs. '+${TotalPrice}" class="text-center"></h2>
+           <form
+             id="placeOrderForm"
+             method="get" th:action="@{/placeOrder}"
+           >
+             <label for="time">Pick Up Time:</label>
+             <input
+             required
+               type="time"
+               id="time"
+               name="time"
+               class="form-control"
+             />
+
+             <label for="paymentMethod">Choose Payment Method:</label>
+             <select
+             
+               id="paymentMethod"
+               name="paymentMethod"
+               class="form-control"
+                >
+                <option value="Online" selected>Online</option>
+                <option value="Cash" id="cashOption" >Cash</option>
+            </select>
+
+             <div id="online-payment">
+
+                 <h4 class="my-3 text-center ">Online Payment</h4>
+     
+                 <div class="d-block my-3">
+                    <div class="custom-control custom-radio">
+                        <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" checked>
+                        <label class="custom-control-label" for="debit">Debit card</label>
+                      </div>
+                   <div class="custom-control custom-radio">
+                     <input id="credit" name="paymentMethod" type="radio" class="custom-control-input"  >
+                     <label class="custom-control-label" for="credit">Credit card</label>
+                   </div>
+                  
+                   <div class="custom-control custom-radio">
+                     <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" >
+                     <label class="custom-control-label" for="paypal">Paypal</label>
+                   </div>
+                 </div>
+
+                 <div class="row">
+                   <div class="col-md-6 mb-3">
+                     <label for="cc-name">Name on card</label>
+                     <input type="text" class="form-control" id="cc-name" placeholder=""  required>
+                     <small class="text-muted">Full name as displayed on card</small>
+                   </div>
+                   <div class="col-md-6 mb-3">
+                     <label for="cc-number">Credit card number</label>
+                     <input type="text" class="form-control" id="cc-number" placeholder=""  required>
+                   </div>
+                 </div>
+                 <div class="row">
+                   <div class="col-md-3 mb-3">
+                     <label for="cc-expiration">Expiration</label>
+                     <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
+                   </div>
+                   <div class="col-md-3 mb-3">
+                     <label for="cc-expiration">CVV</label>
+                     <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                   </div>
+                 </div>
+             </div>
+
+                
+            
+
+
+
+            <div class="modal-footer">
+                <!-- <button
+                  type="button"
+                  class="btn btn-warning font-weight-bold text-white"
+                  onclick="document.getElementById('addToCartForm').submit()"
+                >
+                  Add to Cart
+                </button> -->
+                <button type="submit" class="btn btn-warning font-weight-bold text-white" id="placeOrderBtn">
+                  Place Order
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+           </form>
+         </div>
+        
+       </div>
+     </div>
+   </div>
+
+   <!-- Place Order Modal End -->
+    
+</f>
+
+
+<!-- cart section ends -->
+
+
+
+
+<!-- jQery -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<!-- popper js -->
+<script
+        th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"
+></script>
+<!-- bootstrap js -->
+<script th:src="@{/js/bootstrap.js}"></script>
+<!-- owl slider -->
+<script
+        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+></script>
+<!-- isotope js -->
+<script
+        th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
+></script>
+<!-- nice select -->
+<script
+        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+></script>
+<!-- custom js -->
+<script th:src="@{/js/custom.js}"></script>
+<!-- Google Map -->
+<script
+        th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
+></script>
+<!-- End Google Map -->
+<script>
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+    var onlinePaymentDiv = document.getElementById('online-payment');
+
+    var cardName = document.getElementById('cc-name');
+    var cardNumber = document.getElementById('cc-number');
+    var cardExpiration = document.getElementById('cc-expiration');
+    var cardCVV = document.getElementById('cc-cvv');
+
+    console.log(this.value)
+    if (this.value === 'Cash') {
+        cardName.removeAttribute('required');
+        cardNumber.removeAttribute('required');
+        cardExpiration.removeAttribute('required');
+        cardCVV.removeAttribute('required');
+        onlinePaymentDiv.style.display = 'none';
+    } else {
+        onlinePaymentDiv.style.display = 'block';
+
+        cardName.setAttribute('required', '');
+        cardNumber.setAttribute('required', '');
+        cardExpiration.setAttribute('required', '');
+        cardCVV.setAttribute('required', '');
+    }
+
+    
+
+    
+});
+
+document.getElementById('proceed-for-payment').addEventListener('click', function() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+
+        // Pad the hours and minutes with leading zeros, if required
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+
+        // Combine the hours and minutes
+        var timeString = hours + ":" + minutes;
+
+        // Set the time string as the value of the time input field
+        document.getElementById('time').value = timeString;
+ });
+</script>
+</body>
+</html>

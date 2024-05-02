@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Manager Registration Form</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!-- Font Awesome -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- Responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        margin: auto;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        border-radius: 0;
+      }
+
+      .btn-primary {
+        border-radius: 0;
+      }
+
+      .btn-primary:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+      }
+
+      .error-message {
+        color: #dc3545;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
+    <div class="container">
+      <h2 class="text-center mb-4">Manager Registration Form</h2>
+      <div th:if="${error}" class="error-message" th:text="${error}"></div>
+      <form action="/adminpanel/addManager" method="post">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputName"
+            name="name"
+            placeholder="Enter name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email address</label>
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            name="email"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else except Asim
+            Munir.</small
+          >
+        </div>
+        <div class="form-group">
+          <label for="inputContact">Contact</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="inputContact"
+            name="contact"
+            placeholder="Enter contact number"
+            maxlength="11"
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            name="address"
+            placeholder="Enter address"
+          />
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword"
+            name="password"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+  </body>
+</html>

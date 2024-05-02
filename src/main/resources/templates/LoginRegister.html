@@ -1,78 +1,76 @@
-<html>
-<head>
+
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
     <title>Log in</title>
-    <link rel="stylesheet" href="LoginRegister.css">
+    <link rel="stylesheet" th:href="@{/css/LoginRegister.css}" />
+
+
     <style>
-        .error-message 
-        {
-            color: red;
-            font-size: 12px;
-        }
+      .error-message {
+        color: red;
+        font-size: 12px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="hero">
-        <div class="form-box">
-            <div class="button-box">
-                <div id="colour"></div>
-                <button type="button" class="toggle-btn" onclick="login()"> Log-In</button>
-                <button type="button" class="toggle-btn" onclick="register()"> Register</button>
-            </div>
-            <div class="Welcome">
-                <h4> Welcome to the FAST-NUCES eCafe! </h4>
-            </div>
-            <form id="login" class="inputdata">
-                <input type="text" class="inputfield" placeholder="Username" required>
-                <input type="password" class="inputfield" placeholder="Enter Password" required>
-                <select id="UserRole" name="UserRole" class="role">
-                    <option value="" selected disabled>Select Role</option>
-                    <option value="Student">Student</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Clerk">Clerk</option>
-                </select>
-                <br>
-                <input type="checkbox" class="check-box">
-                <span>Remember Password</span>
-                <button type="submit" class="submit-btn">Log In</button>
-            </form>
-            <form id="register" class="inputdata" >
-                <input type="text" class="inputfield" id="regUsername" placeholder="Username" required>
-                <input type="email" class="inputfield" id="email" placeholder="Email ID" required>
-                <input type="password" class="inputfield" id="regPassword" placeholder="Enter Password" required>
-                <input type="address" class="inputfield" id="Address" placeholder="Address" required>
-                <input type="Contact" class="inputfield" id="Contact" placeholder="03xxxxxxxxx" required>
-                <select id="UserRole" name="UserRole" class="role">
-                    <option value="" selected disabled>Select Role</option>
-                    <option value="Student">Student</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Clerk">Clerk</option>
-                </select>
-                <input type="checkbox" class="check-box" id="termsCheckbox" required>
-                <span>I agree to the terms and conditions</span>
-                <button type="submit" class="submit-btn">Register</button>
-            </form>
+      <div class="form-box">
+        <a href="/" class="close">&times;</a>
+        <div class="Welcome">
+            <h2>Log-In</h2>
+            <br><br>
+          <h3>Welcome to the FAST-NUCES eCafe!</h3>
         </div>
-    </div>
+        <div >
+          <p style="font-size: 13px;margin: 5px;" role="alert" th:text="${message}">
+          </p>
+        </div>
+        <form
+          id="login"
+          action="/loggingIn"
+          method="post"
+          class="inputdata"
+          th:object="${user}"
+        >
+          <input
+            type="email"
+            class="inputfield"
+            placeholder="Enter Email"
+            required
+            th:field="*{email}"
+          />
+          <input
+            type="password"
+            class="inputfield"
+            placeholder="Enter Password"
+            required
+            th:field="*{password}"
+          />
 
-    <script>
-        var x = document.getElementById("login");
-        var y = document.getElementById("register");
-        var z = document.getElementById("colour");
+          <!-- Include the dropdown for selecting the user role -->
+          <select th:field="*{role}" class="role" required>
+            <option value="" selected disabled>Select Role</option>
+            <option value="Customer">Customer</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="Clerk">Clerk</option>
+          </select>
+          <br/>
+          
 
-        function register() {
-            x.style.left = "-400px";
-            y.style.left = "50px";
-            z.style.left = "110px";
-        }
+            <input type="checkbox" class="check-box" />
+            <span>Remember Password</span>
+            
+              <a  class="register-link" href="/register" >Register Here</a>
+      
 
-        function login() {
-            x.style.left = "50px";
-            y.style.left = "450px";
-            z.style.left = "0";
-        }
-    </script>
-</body>
+          <button type="submit" class="submit-btn">Log In</button>
+        </form>
+      </div>
+    </div> 
+  
+  </body>
 </html>
-

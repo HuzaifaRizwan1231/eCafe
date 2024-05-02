@@ -1,0 +1,51 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <nav
+    th:fragment="adminNavbar"
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a class="navbar-brand" href="/CurrentOrders">Admin Panel</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/CurrentOrders">Current Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/OrderHistory">Order History</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="/getproduct2">Manage Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/addClerk">Add Clerk</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/viewAllManagers"
+            >Manage Managers</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/viewAllClerks">Manage Clerks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/addManager">Add Manager</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/addClerk">Add Clerk</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</html>

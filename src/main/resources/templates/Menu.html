@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu Form</title>
+</head>
+<body>
+  <h2>Set Timimings</h2>
+  <form th:action="@{/saveMenuTiming}" method="post">
+    <label for="startTime">Start Time:</label>
+    <input type="time" id="startTime" name="startTime" required><br><br>
+    
+    <label for="endTime">End Time:</label>
+    <input type="time" id="endTime" name="endTime" required><br><br>
+    
+    <label for="breakFastTime">Breakfast Time:</label>
+    <input type="time" id="breakFastTime" name="breakFastTime" required><br><br>
+    
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

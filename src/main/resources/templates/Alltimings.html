@@ -1,0 +1,153 @@
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Form</title>
+    <style>
+        body {
+            overflow: hidden; /* Hide scrollbar */
+            position: relative;
+            height: 100vh; /* Ensure full height */
+        }
+        .blur-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('background.jpg'); /* Change to your background image */
+            filter: blur(10px); /* Adjust blur intensity */
+            z-index: -1; /* Behind other content */
+        }
+        .table-container {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+        }
+        .table-container .table {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* Adjust background color and opacity */
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Adjust shadow */
+        }
+        .table-container .table th {
+            text-align: center; /* Center-align table headers */
+        }
+        .table-container .table th, .table-container .table td {
+            vertical-align: middle; /* Align cell content vertically */
+        }
+        .btn-link {
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            color: #007bff; /* Blue color for button-like links */
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-link:hover {
+            color: #0056b3; /* Darker blue color on hover */
+        }
+        .table-custom {
+    width: 70%; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    /* Add any additional styling as required */
+}
+
+    </style>
+</head>
+<body>
+    <h1 class="text-center">Timings</h1>
+    <div class="blur-bg"></div>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-bordered table-custom ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Start Time</th>
+                        <th scope="col">End Time</th>
+                        <th scope="col">Breakfast Time</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="menuu : ${menu}">
+                        <td th:text="${menuu.id}"></td>
+                        <td th:text="${menuu.startTime}"></td>
+                        <td th:text="${menuu.endTime}"></td>
+                        <td th:text="${menuu.breakFastTime}"></td>
+                        <td>
+                            <a th:href="@{'/EditTime/' + ${menuu.id}}" class="btn-link">
+                                <i class="fa-duotone fa-pen-to-square"></i> Edit Time
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/Delete/' + ${menuu.id}}" class="btn-link">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .sty{
+color: black;
+text-decoration: none;
+    }
+    .sty:hover{
+color: black;
+text-decoration: none;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4 mt-4">Time Management</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Breakfast Time</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="menuu : ${menu}">
+                    <td th:text="${menuu.id}"></td>
+                    <td th:text="${menuu.startTime}"></td>
+                    <td th:text="${menuu.endTime}"></td>
+                    <td th:text="${menuu.breakFastTime}"></td>
+                    <td>
+                        <a th:href="@{'/EditTime/' + ${menuu.id}}" class="btn-link sty">
+                            <i class="fa-duotone fa-pen-to-square"></i> Edit Time
+                        </a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/Delete/' + ${menuu.id}}" class="btn-link sty">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+</body>
+</html>
+

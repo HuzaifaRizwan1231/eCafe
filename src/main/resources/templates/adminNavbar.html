@@ -1,0 +1,53 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <nav
+    th:fragment="adminNavbar"
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
+    <a th:if="${role == 'Admin'}" class="navbar-brand" href="/CurrentOrders">Admin Panel</a>
+    <a th:if="${role == 'Clerk'}" class="navbar-brand" href="/CurrentOrders">Clerk Panel</a>
+    <a th:if="${role == 'Manager'}" class="navbar-brand" href="/OrderHistory">Manager Panel</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li th:if="${role == 'Clerk' or role =='Admin'}" class="nav-item">
+          <a  class="nav-link" href="/CurrentOrders">Current Orders</a>
+        </li>
+        <li th:if="${role == 'Manager' or role =='Admin'}" class="nav-item">
+          <a  class="nav-link" href="/OrderHistory">Order History</a>
+        </li>
+        
+        <li th:if="${role == 'Manager' or role =='Admin'}"  class="nav-item">
+          <a class="nav-link" href="/getproduct2">Manage Products</a>
+        </li>
+        <li  th:if="${role =='Admin'}"  class="nav-item">
+          <a class="nav-link" href="/adminpanel/addClerk">Add Clerk</a>
+        </li>
+        <li th:if="${role =='Admin'}" class="nav-item">
+          <a class="nav-link" href="/adminpanel/addManager">Add Manager</a>
+        </li>
+        <li th:if="${role =='Admin'}" class="nav-item">
+          <a class="nav-link" href="/adminpanel/viewAllManagers"
+            >Manage Managers</a
+          >
+        </li>
+        <li th:if="${role =='Admin'}" class="nav-item">
+          <a class="nav-link" href="/adminpanel/viewAllClerks">Manage Clerks</a>
+        </li>
+        <li th:if="${role =='Admin' or role == 'Manager'}" class="nav-item">
+          <a class="nav-link" href="/analytics">View Analytics</a>
+        </li>
+        
+      </ul>
+    </div>
+  </nav>
+</html>

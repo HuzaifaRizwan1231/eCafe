@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- bootstrap core css -->
+     <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+     <!--owl slider stylesheet -->
+     <link
+       rel="stylesheet"
+       type="text/css"
+       th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+     />
+     <!-- nice select  -->
+     <link
+       rel="stylesheet"
+       th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+       integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+       crossorigin="anonymous"
+     />
+     <!-- font awesome style -->
+     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+ 
+     <!-- Custom styles for this template -->
+     <link th:href="@{/css/style.css}" rel="stylesheet" />
+     <!-- responsive style -->
+     <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+ 
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Analytics</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        function drawChart(productData) {
+
+            productData.sort(function(a, b) {
+                return b[1] - a[1]; // Compare prices in descending order
+            });
+
+            var productData = productData.slice(0, 20);
+            google.charts.load("current", {packages:['corechart']});
+            google.charts.setOnLoadCallback(function() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Product');
+            data.addColumn('number', 'Total Sale');
+            data.addRows(productData);
+
+            var options = {
+                title: "Top Products",
+                width: 1280,
+                height: 720,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+            chart.draw(data, options);
+        });
+    }
+    </script>
+</head>
+<body>
+    
+    <div th:replace="adminNavbar :: adminNavbar"></div>
+    <div id="columnchart_values" style="width: 900px; height: 300px;"></div>
+
+    <div id="products" class="d-none">
+        <div th:each="productName, i : ${productNames}">
+            <div class="name"  th:text="${productName}"></div>
+            <div class="price" th:text="${productPrices[i.index]}"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var products = document.querySelectorAll("#products > div");
+            var productData = [];
+            products.forEach(function(product) {
+                var nameElement = product.querySelector(".name"); // Assuming you have a class name for the name element
+                var priceElement = product.querySelector(".price"); // Assuming you have a class name for the value element
+                if (nameElement && priceElement) {
+                    var name = nameElement.innerText;
+                    var price = parseFloat(priceElement.innerText); // Remove $ sign and parse to float
+                    productData.push([name, price]);
+                }
+            });
+            drawChart(productData);
+        });
+    </script>
+    
+</body>
+</html>
