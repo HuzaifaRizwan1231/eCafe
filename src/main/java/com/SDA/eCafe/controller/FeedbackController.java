@@ -37,7 +37,7 @@ public class FeedbackController {
     }
 
     @GetMapping("/feedback/{productId}")
-    public String showFeedbackForm(@PathVariable("productId") int productId, HttpServletRequest request, Model model) {
+    public String showFeedbackForm(@PathVariable("productId") int productId, Model model ,HttpServletRequest request) {
 
         // Get user ID from cookies
         Integer userId = getUserIdFromCookies(request);
@@ -60,7 +60,7 @@ public class FeedbackController {
     }
 
     @PostMapping("/submitFeedback")
-    public String submitFeedback(@ModelAttribute("feedback") Feedback feedback,HttpServletRequest request, Model model) {
+    public String submitFeedback(@ModelAttribute("feedback") Feedback feedback, Model model, HttpServletRequest request) {
 
         Integer userId = getUserIdFromCookies(request);
    
