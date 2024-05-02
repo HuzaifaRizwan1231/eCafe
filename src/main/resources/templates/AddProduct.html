@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Product</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input,
+      button {
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Add New Product</h2>
+        <form  th:action="@{/addProduct}" method="get">
+        <input type="text" name="name" placeholder="Product Name" required />
+        <input
+          type="text"
+          name="description"
+          placeholder="Product Description"
+          required
+        />
+        <div class="dropdown">
+          <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status" required>
+              <option
+                th:value="available"
+                th:selected="${Status == 'available'}"
+              >
+                Available
+              </option>
+              <option
+                th:value="unavailable"
+                th:selected="${Status == 'unavailable'}"
+              >
+                Unavailable
+              </option>
+            </select>
+          </div>
+        </div>
+        <input
+          type="number"
+          name="price"
+          placeholder="Product Price"
+          required
+        />
+        <label for="Category">Category</label>
+        <!-- <select
+        
+          id="paymentMethod"
+          name="paymentMethod"
+          class="form-control"
+           >
+           <option value="Online" selected>Online</option>
+           <option value="Cash" id="cashOption" >Cash</option>
+       </select> -->
+
+        <select class="form-control" id="Category" name="Category" required>
+
+          <option value="Fast Food">Fast Food</option>
+          <option value="Desi Food">Desi Food</option>
+          <option value="Cold Drinks">Cold Drinks</option>
+          <option value="Hot Drinks">Hot Drinks</option>
+        </select>
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
+  </body>
+</html>

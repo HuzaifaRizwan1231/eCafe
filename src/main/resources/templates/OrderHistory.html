@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="text-center">Orders History</h1>
+            </div>
+            <div class="col-md-6 mt-2 text-right">
+                <a href="/CurrentOrders" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Pickup Time</th>
+                    <th scope="col"></th> <!-- Empty column for the button -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Thymeleaf iteration over the list of orders -->
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.productId}"></td>
+                    <td th:text="${order.userId}"></td>
+                    <td th:text="${order.quantity}"></td>
+                    <td th:text="${order.productPrice}"></td>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.paymentMethod}"></td>
+                    <td th:text="${order.pickupTime}"></td>
+                </tr>
+            </tbody>
+            
+        </table>
+    </div>
+    <!-- Bootstrap JS (Optional, only if you need Bootstrap JavaScript features) -->
+</body>
+</html>

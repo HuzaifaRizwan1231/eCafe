@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Current Orders</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Pickup Time</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Thymeleaf iteration over the list of orders -->
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.Id}"></td>
+                    <td th:text="${order.productId}"></td>
+                    <td th:text="${order.userId}"></td>
+                    <td th:text="${order.quantity}"></td>
+                    <td th:text="${order.productPrice}"></td>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.paymentMethod}"></td>
+                    <td th:text="${order.pickupTime}"></td>
+                    <td>
+                        <a th:href="@{/OrderHistory}" class="btn btn-primary">Order History</a>
+                        <a th:href="@{'/orderDetails/' + ${order.productId}}" class="btn btn-primary">Order Details</a>
+                    </td>
+                    <td>
+                        <a th:href="@{'/CompleteOrder/' + ${order.Id}}" class="btn btn-success">Complete Order</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

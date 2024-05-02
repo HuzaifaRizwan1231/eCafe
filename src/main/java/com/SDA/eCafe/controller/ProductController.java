@@ -4,8 +4,6 @@ import com.SDA.eCafe.model.Product;
 import com.SDA.eCafe.repository.ProductRepository;
 import com.SDA.eCafe.service.ProductService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -103,24 +100,7 @@ public class ProductController {
         return filteredProducts;
     }
 
-    /*@GetMapping("/productDetail")
-    public String getProductDetail(@RequestParam("id") Long id, Model model) {
-        try {
-            Optional<Product> optionalProduct = productRepository.findById(id);
-            if (optionalProduct.isPresent()) {
-                Product product = optionalProduct.get();
-                model.addAttribute("product", product);
-                return "productDetail";
-            } else {
-                // Product not found
-                return "error"; // You might want to return a custom error page or handle it differently
-            }
-        } catch (Exception error) {
-            return "error";
-        }
-    }*/
-
-    @GetMapping("/productdetails/{id}")
+   @GetMapping("/productdetails/{id}")
     public String getProductDetail(@PathVariable("id") int productId, Model model) {
         try {
             Product product = productService.getProductById(productId);
@@ -134,5 +114,26 @@ public class ProductController {
     }
 
 
+ @PostMapping("/product/addToCart")
+    public String addToCart(@RequestBody String entity) {
+        try {
+            System.out.println("agya tu jawan ho kr");
+            return "nothing";
+        } catch (Exception error) {
+           return "error";
+        }
+    }
+
+
+
+    @GetMapping("/cart")
+    public String cart(Model model) {
+        try {
+            return "Cart";
+        }catch(Exception error){
+
+            return "error";
+        }
+    }
 }
 

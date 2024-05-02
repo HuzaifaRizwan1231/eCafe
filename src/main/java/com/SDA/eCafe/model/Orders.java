@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Orders")
-public class Orders {
+public class Orders{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,7 +71,9 @@ public class Orders {
     private String PaymentMethod;
 
     @Column(name = "PickupTime")
+
     private java.sql.Time PickupTime;
+
 
     public Integer getId() {
         return Id;
@@ -93,13 +95,16 @@ public class Orders {
         return ProductPrice;
     }
 
+
     public Date getDate() {
         return Date;
     }
 
+
     public String getStatus() {
         return Status;
     }
+
 
     public String getPaymentMethod() {
         return PaymentMethod;
@@ -108,4 +113,6 @@ public class Orders {
     public Time getPickupTime() {
         return PickupTime;
     }
+
+
 }

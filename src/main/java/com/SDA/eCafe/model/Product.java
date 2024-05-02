@@ -61,4 +61,35 @@ public class Product {
     public String getCategory() {
         return Category;
     }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
+    
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+    
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+    
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+    
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+    
+    public void setPrice(Integer Price) {
+        this.Price = Price;
+    }
+    
+    public void setCategory(String Category) {
+        this.Category = Category;
+    }
+    
+
+
 }

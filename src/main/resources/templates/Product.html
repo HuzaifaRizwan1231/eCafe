@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Remove default styles of anchor tags */
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        nav {
+            background-color: #333; /* Background color for the navbar */
+            overflow: hidden; /* Ensure the navbar content doesn't overflow */
+        }
+
+        nav a {
+            float: left; /* Float the anchor tags to the left */
+            display: block; /* Make them block-level elements */
+            color: white; /* Text color */
+            text-align: center; /* Center the text */
+            padding: 14px 16px; /* Padding around the text */
+            text-decoration: none; /* Remove default underline */
+        }
+
+        .margi{
+             margin-top: 5px;
+             margin-bottom: 5px;
+        }
+        nav a:hover {
+            text-decoration: none;
+            color: #36f58c;
+            cursor: pointer;  
+           }
+
+        .product-container {
+            position: relative;
+        }
+
+        .product-img {
+            position: absolute;
+            top: 0;
+            right: 0;
+            max-width: 100px; /* Adjust the max-width as needed */
+            height: auto;
+        }
+
+        .mt {
+            margin-top: 20px;
+        }
+
+        .ml {
+            margin-left: 20px;
+            margin-top: 30px;
+        }
+
+        .mar {
+            position: absolute;
+            right: 85%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Anchor tags -->
+    <nav class="underline">
+        <a th:href="@{/ProductsCategory/Fast%20Food}">Fast Food</a>
+        <a th:href="@{/ProductsCategory/Desi%20Food}">Desi Food</a>
+        <a th:href="@{/ProductsCategory/Cold%20Drinks}">Cold Drinks</a>
+        <a th:href="@{/ProductsCategory/Hot%20Drinks}">Hot Drinks</a>
+    </nav>
+    <h1 class="text-center margi" th:text="${productCategory}"></h1>
+    <hr>
+    
+    <div th:if="${product.empty}">
+        <p>No products available for this category.</p>
+    </div>
+    <div th:if="${not product.empty}" class="ml">
+        <div th:each="product : ${product}" class="product-container">
+            <div>
+                <h2 th:text="${product.Name}"></h2>
+                <p th:text="${product.Description}"></p>
+                <p>Price: <span th:text="${product.Price}"></span></p>
+                <p>Status: <span th:text="${product.Status}"></span></p>
+                <span class="mb">
+                    <a th:href="@{/updateStatus/{id}(id=${product.ID}, status='available')}" class="btn btn-primary mar2">Available</a>
+                    <a th:href="@{/updateStatus/{id}(id=${product.ID}, status='unavailable')}" class="btn btn-primary mar">Unavailable</a>
+                    
+            </span> </div>
+            <img th:src="@{/images/{imageName}(imageName=${product.Image})}" alt="Product Image" class="product-img">
+            <hr>
+        </div>
+    </div>
+  
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to send selected status value to controller -->
+
+</body>
+</html>
