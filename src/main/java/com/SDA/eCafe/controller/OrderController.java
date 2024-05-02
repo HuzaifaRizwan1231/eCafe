@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +52,7 @@ public class OrderController {
     }
 
     @GetMapping("/CurrentOrders")
-    public String getOrders(Model model) {
+    public String getPendingOrders(Model model) {
         List<Orders> orders = orderRepository.findAllPendingOrders();
         model.addAttribute("orders", orders);
         return "ViewOrder"; // Assuming you have an HTML template named "orders"
