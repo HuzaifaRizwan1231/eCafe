@@ -77,6 +77,7 @@
         th:action="@{'/ManageMenu/' + ${ID}}"
         method="post"
         th:object="${product}"
+        enctype="multipart/form-data"
       >
         <input type="text" required th:field="*{Name}" placeholder="Product Name" />
         <input
@@ -106,6 +107,11 @@
         </div>
         <label for="Price">Price</label>
         <input type="number" th:field="*{Price}" required placeholder="Product Price" />
+        <input
+          type="file"
+          name="file"
+          placeholder=""
+        />
         <!-- <input type="text" th:field="*{Category}" placeholder="Product Category"/> -->
         <select th:field="*{Category}" required>
           <option value="Fast Food">Fast Food</option>

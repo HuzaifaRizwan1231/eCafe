@@ -12,7 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalTime;
@@ -45,6 +50,8 @@ public class OrderController {
     private ProductRepository productRepository;
     private ProductService productService;
     private UserRepository userRepository;
+
+    private static final String UPLOAD_DIR = "/src/main/resources/static/images/";
 
     @Autowired
     public OrderController(OrderRepository orderRepository, UserRepository userRepository, ProductService productService,ProductRepository productRepository, CartRepository cartRepository) {
@@ -345,13 +352,48 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/addProduct")
-public String addProduct(@ModelAttribute Product product) {
-    // System.out.println("\n\n\n--------------------------------");
-    // System.out.println(product.getCategory());
-    // System.out.println("--------------------------------\n\n\n");
-    productService.saveProduct(product);
-    return "redirect:/getproduct2"; // Redirect to the desired page after adding the product
+    @PostMapping("/addProduct")
+    public String addProduct(@ModelAttribute Product product, @RequestParam("file") MultipartFile file) {
+
+    System.out.println("\n\n\n-------------------------------------");
+    if (file.isEmpty()){
+        System.out.println("\n\n\n-------------------------------------");
+        System.out.println("EMPTY FILE");
+        System.out.println("-------------------------------------\n\n\n");
+    }
+    else{
+        try {
+           
+            // Get the file and save it somewhere
+            productService.saveProduct(product);
+
+            // Get the original filename
+            String originalFilename = file.getOriginalFilename();
+            
+            // Generate a new filename
+            String newFilename = product.getID()+"-"+originalFilename;
+
+            // Define the file path with the new filename
+            Path directory = Paths.get("src/main/resources/static/images/" + newFilename);
+           
+            // Get the file content
+            byte[] bytes = file.getBytes();
+
+            // Write the file content to the new path
+            Files.write(directory, bytes);
+
+            product.setImage(product.getID()+"-" + originalFilename);
+            productService.saveProduct(product);
+            // File uploaded successfully, redirect to success page
+            return "redirect:/getproduct2";
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle file upload failure
+            return "error";
+        }
+    }
+
+    return "error"; // Redirect to the desired page after adding the product
     // return "/AddProduct"; // Redirect to the desired page after adding the product
 }
 
@@ -360,10 +402,11 @@ public String addProduct(@ModelAttribute Product product) {
 
 
     @PostMapping("/ManageMenu/{id}")
-    public String updateProduct(@PathVariable("id") int productId, @ModelAttribute("product") Product updatedProduct, Model model , HttpServletRequest request) {
+    public String updateProduct(@PathVariable("id") int productId, @ModelAttribute("product") Product updatedProduct, Model model , HttpServletRequest request, @RequestParam("file") MultipartFile file) {
         try {
             if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
-                
+
+
                 System.out.println("--------------------------------------------------Yes");
                 // Check if the product exists
                 Product existingProduct = productService.getProductById(productId);
@@ -383,6 +426,26 @@ public String addProduct(@ModelAttribute Product product) {
         
                 // Save the product to the database
                 productService.saveProduct(existingProduct);
+
+                if (!file.isEmpty()){
+                    // Get the original filename
+                    String originalFilename = file.getOriginalFilename();
+                    
+                    // Generate a new filename
+                    String newFilename = existingProduct.getID()+"-"+originalFilename;
+
+                    // Define the file path with the new filename
+                    Path directory = Paths.get("src/main/resources/static/images/" + newFilename);
+                
+                    // Get the file content
+                    byte[] bytes = file.getBytes();
+
+                    // Write the file content to the new path
+                    Files.write(directory, bytes);
+
+                    existingProduct.setImage(existingProduct.getID()+"-" + originalFilename);
+                    productService.saveProduct(existingProduct);
+                }
                 
                 return "redirect:/getproduct2"; // Redirect to the ManageMenu page for the updated product
             }

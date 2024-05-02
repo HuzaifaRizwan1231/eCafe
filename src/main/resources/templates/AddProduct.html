@@ -73,7 +73,7 @@
     <div th:replace="adminNavbar :: adminNavbar"></div>
     <div class="container">
       <h2>Add New Product</h2>
-        <form  th:action="@{/addProduct}" method="get">
+        <form  th:action="@{/addProduct}" method="post" enctype="multipart/form-data">
         <input type="text" name="name" placeholder="Product Name" required />
         <input
           type="text"
@@ -106,6 +106,13 @@
           placeholder="Product Price"
           required
         />
+        <input
+          type="file"
+          name="file"
+          placeholder=""
+          required
+        />
+
         <label for="Category">Category</label>
         <!-- <select
         
