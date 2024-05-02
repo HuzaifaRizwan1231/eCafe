@@ -97,6 +97,6 @@ public class UserController {
         userRepository.save(user);
 
         // Redirect to login page after successful registration
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
