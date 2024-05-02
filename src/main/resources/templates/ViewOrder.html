@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Orders</title>
+   <!-- bootstrap core css -->
+   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+   <!--owl slider stylesheet -->
+   <link
+     rel="stylesheet"
+     type="text/css"
+     th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+   />
+   <!-- nice select  -->
+   <link
+     rel="stylesheet"
+     th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+     integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+     crossorigin="anonymous"
+   />
+   <!-- font awesome style -->
+   <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+   <!-- Custom styles for this template -->
+   <link th:href="@{/css/style.css}" rel="stylesheet" />
+   <!-- responsive style -->
+   <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+</head>
+<body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
+    <div th:fragment="viewOrder" class="container">
+        <h1 class="text-center">Current Orders</h1>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Payment Method</th>
+                    <th scope="col">Pickup Time</th>
+                    <th scope="col" class="text-center ">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Thymeleaf iteration over the list of orders -->
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.Id}"></td>
+                    <td th:text="${order.productId}"></td>
+                    <td th:text="${order.userId}"></td>
+                    <td th:text="${order.quantity}"></td>
+                    <td th:text="${order.productPrice}"></td>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.paymentMethod}"></td>
+                    <td th:text="${order.pickupTime}"></td>
+                    <td class="d-flex">
+                        <a th:href="@{'/orderDetails/' + ${order.productId}}" class="btn btn-primary mx-2">Order Details</a>
+                        <a th:href="@{'/CompleteOrder/' + ${order.Id}}" class="btn btn-success">Complete Order</a>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

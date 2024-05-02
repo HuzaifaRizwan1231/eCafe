@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!--owl slider stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+    />
+    <!-- nice select  -->
+    <link
+      rel="stylesheet"
+      th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+      integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+      crossorigin="anonymous"
+    />
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <title>Edit Product</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      input,
+      button {
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
+    <div class="container">
+      <h2>Edit Product</h2>
+      <form
+        th:action="@{'/ManageMenu/' + ${ID}}"
+        method="post"
+        th:object="${product}"
+      >
+        <input type="text" required th:field="*{Name}" placeholder="Product Name" />
+        <input
+          type="text"
+          required
+          th:field="*{Description}"
+          placeholder="Product Description"
+        />
+        <div class="dropdown">
+          <div class="form-group">
+            <label for="Status">Status</label>
+            <select class="form-control" id="Status" name="Status" required>
+              <option
+                th:value="available"
+                th:selected="${product.Status == 'available'}"
+              >
+                Available
+              </option>
+              <option
+                th:value="unavailable"
+                th:selected="${product.Status == 'unavailable'}"
+              >
+                Unavailable
+              </option>
+            </select>
+          </div>
+        </div>
+        <label for="Price">Price</label>
+        <input type="number" th:field="*{Price}" required placeholder="Product Price" />
+        <!-- <input type="text" th:field="*{Category}" placeholder="Product Category"/> -->
+        <select th:field="*{Category}" required>
+          <option value="Fast Food">Fast Food</option>
+          <option value="Desi Food">Desi Food</option>
+          <option value="Cold Drinks">Cold Drinks</option>
+          <option value="Hot Drinks">Hot Drinks</option>
+        </select>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+   <!-- jQery -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<!-- popper js -->
+<script
+        th:src="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"
+></script>
+<!-- bootstrap js -->
+<script th:src="@{/js/bootstrap.js}"></script>
+<!-- owl slider -->
+<script
+        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js}"
+></script>
+<!-- isotope js -->
+<script
+        th:src="@{https://unpkg.com/isotope-layout@3.0.4/dist/isotope.pkgd.min.js}"
+></script>
+<!-- nice select -->
+<script
+        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js}"
+></script>
+<!-- custom js -->
+<script th:src="@{/js/custom.js}"></script>
+<!-- Google Map -->
+<script
+        th:src="@{https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap}"
+></script>
+<!-- End Google Map -->
+  </body>
+</html>

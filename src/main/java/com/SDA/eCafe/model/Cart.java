@@ -1,8 +1,7 @@
 package com.SDA.eCafe.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import com.SDA.eCafe.model.CartId;
+
 
 @Entity
 @Table(name = "Cart")
