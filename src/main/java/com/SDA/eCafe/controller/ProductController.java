@@ -124,16 +124,5 @@ public class ProductController {
         }
     }
 
-
-
-    @GetMapping("/cart")
-    public String cart(Model model) {
-        try {
-            return "Cart";
-        }catch(Exception error){
-
-            return "error";
-        }
-    }
 }
 

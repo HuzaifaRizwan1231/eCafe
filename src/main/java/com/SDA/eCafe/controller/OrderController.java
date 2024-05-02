@@ -54,7 +54,7 @@ public class OrderController {
     }
 
     @GetMapping("/CurrentOrders")
-    public String getOrders(Model model) {
+    public String getPendingOrders(Model model) {
         List<Orders> orders = orderRepository.findAllPendingOrders();
         model.addAttribute("orders", orders);
         return "ViewOrder"; // Assuming you have an HTML template named "orders"

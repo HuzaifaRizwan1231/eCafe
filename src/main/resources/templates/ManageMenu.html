@@ -80,15 +80,19 @@
     </style>
 </head>
 <body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
     <!-- Anchor tags -->
-    <nav class="underline">
-        <a th:href="@{/ProductsCategory2/Fast%20Food}">Fast Food</a>
-        <a th:href="@{/ProductsCategory2/Desi%20Food}">Desi Food</a>
-        <a th:href="@{/ProductsCategory2/Cold%20Drinks}">Cold Drinks</a>
-        <a th:href="@{/ProductsCategory2/Hot%20Drinks}">Hot Drinks</a>
-        <a th:href="@{/CreateProduct}" class="mar2 text-center">ADD</a>
-
-
+    <nav class="d-flex w-100 justify-content-between">
+        <nav class="underline justify-content-center mx-auto">
+            <a th:href="@{/ProductsCategory2/Fast%20Food}">Fast Food</a>
+            <a th:href="@{/ProductsCategory2/Desi%20Food}">Desi Food</a>
+            <a th:href="@{/ProductsCategory2/Cold%20Drinks}">Cold Drinks</a>
+            <a th:href="@{/ProductsCategory2/Hot%20Drinks}">Hot Drinks</a>
+        </nav>
+        <nav>
+            <a th:href="@{/CreateProduct}" style="color: yellow">ADD</a>
+    
+        </nav>
     </nav>
     <h1 class="text-center margi" th:text="${productCategory}"></h1>
     <hr>
