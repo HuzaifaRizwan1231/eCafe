@@ -43,17 +43,11 @@
   </head>
 
 <body>
-<div class="hero_area">
-  <div class="bg-box">
-    <img th:src="@{/hero-bg.jpg}" alt="" />
-  </div>
-  <!-- header section strats -->
-  <div th:replace="navbar :: navbar"></div>
+ <!-- header section strats -->
+ <section style="background-color: #0d0e10 !important">
+    <div th:replace="navbar :: navbar"></div>
+  </section>
   <!-- end header section -->
-  <!-- slider section -->
-  <div th:replace="slider :: slider"></div>
-  <!-- end slider section -->
-</div>
 
 <!-- menu section start -->
 <div class="container mt-2">
@@ -64,10 +58,6 @@
     <div th:each="product : ${products}">
       <div th:replace="foodCard :: foodCard"></div>
     </div>
-  </div>
-  <div class="text-center">
-    <a href="/menu" class="btn btn-primary">View All Products</a>
-  </div>
     <!-- menu section end -->
 
 <!-- jQery -->

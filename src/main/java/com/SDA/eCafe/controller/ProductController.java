@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -62,12 +64,29 @@ public class ProductController {
     }
 
     @GetMapping("/")
+    public String getLimitedProducts(Model model) {
+        try {
+            List<Product> products = productRepository.findAll();
+            // Shuffle the list to get random order
+            Collections.shuffle(products);
+
+            // Get first 10 products
+            List<Product> randomTenProducts = products.stream().limit(9).collect(Collectors.toList());
+            System.out.println(products);
+            model.addAttribute("products", randomTenProducts);
+            return "index";
+        } catch (Exception error) {
+            return "error";
+        }
+    }
+
+    @GetMapping("/menu")
     public String getAllProducts(Model model) {
         try {
             List<Product> products = productRepository.findAll();
             System.out.println(products);
             model.addAttribute("products", products);
-            return "index";
+            return "menuPageClient";
         } catch (Exception error) {
             return "error";
         }
