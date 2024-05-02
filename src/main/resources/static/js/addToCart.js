@@ -1,11 +1,19 @@
-document.addEventListener("DOMContentLoaded", function () {
+function getCookieValue(cookieName) {
+  let cookieValue = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(cookieName + "="))
+    ?.split("=")[1];
+  return cookieValue;
+}
 
+document.addEventListener("DOMContentLoaded", function () {
   var addToCartBtn = document.getElementById("addToCartBtn");
 
   addToCartBtn.addEventListener("click", function () {
     var quantity = document.getElementById("quantity").value;
     var productId = document.getElementById("productId").innerText;
-    var userId = localStorage.getItem("userId");
+    // var userId = localStorage.getItem("userId");
+    var userId = getCookieValue("userId");
 
     if (!userId) {
       window.location.href = "/login";
@@ -40,4 +48,3 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.send(JSON.stringify(data));
   });
 });
-

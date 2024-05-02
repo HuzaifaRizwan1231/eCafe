@@ -3,9 +3,7 @@
     th:fragment="adminNavbar"
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
-    <a th:if="${role == 'Admin'}" class="navbar-brand" href="/CurrentOrders">Admin Panel</a>
-    <a th:if="${role == 'Clerk'}" class="navbar-brand" href="/CurrentOrders">Clerk Panel</a>
-    <a th:if="${role == 'Manager'}" class="navbar-brand" href="/OrderHistory">Manager Panel</a>
+    <a class="navbar-brand" href="/CurrentOrders">Admin Panel</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -19,31 +17,34 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li th:if="${role == 'Clerk' or role =='Admin'}" class="nav-item">
-          <a  class="nav-link" href="/CurrentOrders">Current Orders</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/CurrentOrders">Current Orders</a>
         </li>
-        <li th:if="${role == 'Manager' or role =='Admin'}" class="nav-item">
-          <a  class="nav-link" href="/OrderHistory">Order History</a>
+        <li class="nav-item">
+          <a class="nav-link" href="/OrderHistory">Order History</a>
         </li>
         
-        <li th:if="${role == 'Manager' or role =='Admin'}"  class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/getproduct2">Manage Products</a>
         </li>
-        <li  th:if="${role =='Admin'}"  class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/adminpanel/addClerk">Add Clerk</a>
         </li>
-        <li th:if="${role =='Admin'}" class="nav-item">
-          <a class="nav-link" href="/adminpanel/addManager">Add Manager</a>
-        </li>
-        <li th:if="${role =='Admin'}" class="nav-item">
+
+        <li class="nav-item">
           <a class="nav-link" href="/adminpanel/viewAllManagers"
             >Manage Managers</a
           >
         </li>
-        <li th:if="${role =='Admin'}" class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="/adminpanel/viewAllClerks">Manage Clerks</a>
         </li>
-        
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/addManager">Add Manager</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/adminpanel/addClerk">Add Clerk</a>
+        </li>
       </ul>
     </div>
   </nav>

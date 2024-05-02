@@ -72,11 +72,11 @@ public class UserController {
                         Cookie cookie = new Cookie("userId", String.valueOf(userId));
                         response.addCookie(cookie);
                         if ("Admin".equals(role)) {
-                            return "redirect:/adminpanel";
+                            return "redirect:/CurrentOrders";
                         } else if ("Clerk".equals(role)) {
-                            return "redirect:/clerk";
+                            return "redirect:/CurrentOrders";
                         } else if ("Manager".equals(role)) {
-                            return "redirect:/manager";
+                            return "redirect:/OrderHistory";
                         } else {
                             return "redirect:/";
                         }
@@ -114,6 +114,8 @@ public class UserController {
     public String addManagerForm(Model model, HttpServletRequest request) {
         if ("Admin".equals(getRoleFromCookies(request))) {
             model.addAttribute("user", new User());
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             return "addManager";
         } else {
             return "redirect:/login";
@@ -124,6 +126,8 @@ public class UserController {
     public String addClerkForm(Model model, HttpServletRequest request) {
         if ("Admin".equals(getRoleFromCookies(request))) {
             model.addAttribute("user", new User());
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             return "addClerk";
         } else {
             return "redirect:/login";
@@ -191,6 +195,8 @@ public class UserController {
                         .filter(user -> "Manager".equals(user.getRole()))
                         .collect(Collectors.toList());
                 model.addAttribute("managers", managers);
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
                 return "Manager";
             } catch (Exception error) {
                 System.out.println("-------------------------------------------------");
@@ -211,6 +217,8 @@ public class UserController {
                         .filter(user -> "Clerk".equals(user.getRole()))
                         .collect(Collectors.toList());
                 model.addAttribute("clerks", clerks);
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
                 return "Clerk";
             } catch (Exception error) {
                 System.out.println("-------------------------------------------------");

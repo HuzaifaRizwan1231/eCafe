@@ -24,9 +24,11 @@ import com.SDA.eCafe.model.Cart;
 import com.SDA.eCafe.model.CartId;
 import com.SDA.eCafe.model.Orders;
 import com.SDA.eCafe.model.Product;
+import com.SDA.eCafe.model.User;
 import com.SDA.eCafe.repository.CartRepository;
 import com.SDA.eCafe.repository.OrderRepository;
 import com.SDA.eCafe.repository.ProductRepository;
+import com.SDA.eCafe.repository.UserRepository;
 import com.SDA.eCafe.service.ProductService;
 
 import jakarta.transaction.Transactional;
@@ -42,29 +44,65 @@ public class OrderController {
     private CartRepository cartRepository;
     private ProductRepository productRepository;
     private ProductService productService;
+    private UserRepository userRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, ProductService productService,ProductRepository productRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, ProductService productService,ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
 
+    }
+
+    public String getRoleFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer userId = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    userId = Integer.parseInt(cookie.getValue());
+                    break;
+                }
+            }
+            Optional<User> loggedInUser = userRepository.findById(userId);
+            if (!loggedInUser.isEmpty()) {
+                System.out.println(loggedInUser.get().getRole());
+                return loggedInUser.get().getRole();
+            }
+        }
+        return "noUser";
     }
 
     @GetMapping("/CurrentOrders")
-    public String getPendingOrders(Model model) {
-        List<Orders> orders = orderRepository.findAllPendingOrders();
-        model.addAttribute("orders", orders);
-        return "ViewOrder"; // Assuming you have an HTML template named "orders"
+  
+    public String getPendingOrders(Model model, HttpServletRequest request) {
+        if ("Clerk".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))){
+            List<Orders> orders = orderRepository.findAllPendingOrders();
+            model.addAttribute("orders", orders);
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
+            return "ViewOrder"; // Assuming you have an HTML template named "orders"
+        }
+        else{
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/OrderHistory")
-    public String getOrderHistory(Model model) {
+    public String getOrderHistory(Model model, HttpServletRequest request) {
         try {
 
-            List<Orders> orders = orderRepository.findAllCompletedOrCanceledOrders();
-            model.addAttribute("orders", orders);
-            return "OrderHistory";
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                List<Orders> orders = orderRepository.findAllCompletedOrCanceledOrders();
+                model.addAttribute("orders", orders);
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+                return "OrderHistory";
+            }
+            else{
+                return "redirect:/login";
+            }
 
         } catch (Exception e) {
             return "e";
@@ -73,31 +111,42 @@ public class OrderController {
     }
 
     @GetMapping("/ProductsCategory/{category}")
-    public String getProductBYCategory(@PathVariable("category") String category, Model model) {
+    public String getProductBYCategory(@PathVariable("category") String category, Model model, HttpServletRequest request) {
         try {
             model.addAttribute("product", productRepository.findByCategory(category));
             model.addAttribute("productCategory", category);
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             return "Product";
         } catch (Exception e) {
-            return "e";
+            return "error";
         }
     }
 
     @GetMapping("/ProductsCategory2/{category}")
-    public String getProductBYCategory2(@PathVariable("category") String category, Model model) {
+    public String getProductBYCategory2(@PathVariable("category") String category, Model model, HttpServletRequest request) {
         try {
-            model.addAttribute("product", productRepository.findByCategory(category));
-            model.addAttribute("productCategory", category);
-            return "ManageMenu";
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                model.addAttribute("product", productRepository.findByCategory(category));
+                model.addAttribute("productCategory", category);
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+                return "ManageMenu";
+            }
+            else{
+                return "redirect:/login";
+            }
         } catch (Exception e) {
             return "e";
         }
     }
 
     @GetMapping("/orderDetails/{id}")
-    public String getOrderDetail(@PathVariable("id") int productId, Model model) {
+    public String getOrderDetail(@PathVariable("id") int productId, Model model, HttpServletRequest request) {
         try {
             model.addAttribute("product", productService.getProductById(productId));
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             return "OrderDetail"; // Return the name of your HTML template file
         } catch (Exception error) {
 
@@ -108,11 +157,18 @@ public class OrderController {
 
 
     @GetMapping("/getproduct2")
-        public String getProductByCategory2(Model model) {
+        public String getProductByCategory2(Model model, HttpServletRequest request) {
         try {
-            model.addAttribute("product",productRepository.findByCategory("Fast Food"));
-            model.addAttribute("productCategory", "Fast Food");
-            return "ManageMenu"; // Return the name of your HTML template file
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                model.addAttribute("product",productRepository.findByCategory("Fast Food"));
+                model.addAttribute("productCategory", "Fast Food");
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+                return "ManageMenu"; // Return the name of your HTML template file
+            }
+            else{
+                return "redirect:/login";
+            }
         } catch (Exception error) {
 
             System.out.println("error " + error);
@@ -121,16 +177,23 @@ public class OrderController {
     }
 
     @GetMapping("/editProduct/{id}")
-    public String showEditProductForm(@PathVariable("id") int productId, Model model) {
+    public String showEditProductForm(@PathVariable("id") int productId, Model model, HttpServletRequest request) {
         try {
-            // Get the product from the database
-            Product product = productService.getProductById(productId);
-            
-            // Add the product and ID to the model
-            model.addAttribute("product", product);
-            model.addAttribute("ID", productId);
-    
-            return "EditProduct"; // This should be the name of your HTML file
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                // Get the product from the database
+                Product product = productService.getProductById(productId);
+                
+                // Add the product and ID to the model
+                model.addAttribute("product", product);
+                model.addAttribute("ID", productId);
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+        
+                return "EditProduct"; // This should be the name of your HTML file
+            }
+            else{   
+                return "redirect:/login";
+            }
         } catch (Exception e) {
             return "error";
             // Handle exceptions appropriately
@@ -228,10 +291,17 @@ public class OrderController {
     }
 
     @GetMapping("/CreateProduct")
-    public String addProduct() {
+    public String addProduct(Model model, HttpServletRequest request) {
         try {
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+                return "AddProduct"; // This should be the name of your HTML file
+            }
+            else{
+                return "redirect:/login";
+            }
             // Get the product from the databas
-            return "AddProduct"; // This should be the name of your HTML file
         } catch (Exception e) {
             // Handle exceptions appropriately
             return "error";
@@ -289,29 +359,35 @@ public String addProduct(@ModelAttribute Product product) {
 
 
     @PostMapping("/ManageMenu/{id}")
-    public String updateProduct(@PathVariable("id") int productId, @ModelAttribute("product") Product updatedProduct, Model model) {
+    public String updateProduct(@PathVariable("id") int productId, @ModelAttribute("product") Product updatedProduct, Model model , HttpServletRequest request) {
         try {
-            System.out.println("--------------------------------------------------Yes");
-            // Check if the product exists
-            Product existingProduct = productService.getProductById(productId);
-            
-            // If the product doesn't exist, create a new one
-            if (existingProduct == null) {
-                existingProduct = new Product();
-                existingProduct.setID(productId);
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                
+                System.out.println("--------------------------------------------------Yes");
+                // Check if the product exists
+                Product existingProduct = productService.getProductById(productId);
+                
+                // If the product doesn't exist, create a new one
+                if (existingProduct == null) {
+                    existingProduct = new Product();
+                    existingProduct.setID(productId);
+                }
+        
+                // Update the existing product with the values from the updatedProduct
+                existingProduct.setName(updatedProduct.getName());
+                existingProduct.setDescription(updatedProduct.getDescription());
+                existingProduct.setStatus(updatedProduct.getStatus());
+                existingProduct.setPrice(updatedProduct.getPrice());
+                existingProduct.setCategory(updatedProduct.getCategory());
+        
+                // Save the product to the database
+                productService.saveProduct(existingProduct);
+                
+                return "redirect:/getproduct2"; // Redirect to the ManageMenu page for the updated product
             }
-    
-            // Update the existing product with the values from the updatedProduct
-            existingProduct.setName(updatedProduct.getName());
-            existingProduct.setDescription(updatedProduct.getDescription());
-            existingProduct.setStatus(updatedProduct.getStatus());
-            existingProduct.setPrice(updatedProduct.getPrice());
-            existingProduct.setCategory(updatedProduct.getCategory());
-    
-            // Save the product to the database
-            productService.saveProduct(existingProduct);
-            
-            return "redirect:/getproduct2"; // Redirect to the ManageMenu page for the updated product
+            else{
+                return "redirect:/login";
+            }
         } catch (Exception error) {
             System.out.println("--------------------------------------------------Yes");
             System.out.println("error " + error);
@@ -320,31 +396,36 @@ public String addProduct(@ModelAttribute Product product) {
     }
     
     @PostMapping("/DeleteItem/{category}/{id}")
-    public String deleteItem(@PathVariable("id") int productId, @PathVariable("category") String category) {
+    public String deleteItem(@PathVariable("id") int productId, @PathVariable("category") String category, HttpServletRequest request) {
         try {
-
-            System.out.println("----------------------------------");
-            System.out.println(category);
-            // Check if the product exists
-            Product productToDelete = productService.getProductById(productId);
-            // If the product exists, delete it
-            if (productToDelete != null) {
-                productService.deleteProductById(productId);
+            if ("Manager".equals(getRoleFromCookies(request)) || "Admin".equals(getRoleFromCookies(request))) {
+                
+                System.out.println("----------------------------------");
+                System.out.println(category);
+                // Check if the product exists
+                Product productToDelete = productService.getProductById(productId);
+                // If the product exists, delete it
+                if (productToDelete != null) {
+                    productService.deleteProductById(productId);
+                }
+    
+                if ("Fast Food".equals(category)){
+                    return "redirect:/ProductsCategory2/Fast%20Food";
+                }
+                if ("Desi Food".equals(category)){
+                    return "redirect:/ProductsCategory2/Desi%20Food";
+                }
+                if ("Cold Drinks".equals(category)){
+                    return "redirect:/ProductsCategory2/Cold%20Drinks";
+                }
+               
+                    return "redirect:/ProductsCategory2/Hot%20Drinks";
+                
+                // Redirect to the ManageMenu page
             }
-
-            if ("Fast Food".equals(category)){
-                return "redirect:/ProductsCategory2/Fast%20Food";
+            else{
+                return "redirect:/login";
             }
-            if ("Desi Food".equals(category)){
-                return "redirect:/ProductsCategory2/Desi%20Food";
-            }
-            if ("Cold Drinks".equals(category)){
-                return "redirect:/ProductsCategory2/Cold%20Drinks";
-            }
-           
-                return "redirect:/ProductsCategory2/Hot%20Drinks";
-            
-            // Redirect to the ManageMenu page
         } catch (Exception error) {
             // Log the error
             System.out.println("Error deleting product: " + error.getMessage());

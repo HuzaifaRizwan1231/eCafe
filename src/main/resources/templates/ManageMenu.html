@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   <!-- bootstrap core css -->
+   <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+   <!--owl slider stylesheet -->
+   <link
+     rel="stylesheet"
+     type="text/css"
+     th:href="@{https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css}"
+   />
+   <!-- nice select  -->
+   <link
+     rel="stylesheet"
+     th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css}"
+     integrity="sha512-CruCP+TD3yXzlvvijET8wV5WxxEh5H8P4cmz0RFbKK6FlZ2sYl3AEsKlLPHbniXKSrDdFewhbmBK5skbdsASbQ=="
+     crossorigin="anonymous"
+   />
+   <!-- font awesome style -->
+   <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+   <!-- Custom styles for this template -->
+   <link th:href="@{/css/style.css}" rel="stylesheet" />
+   <!-- responsive style -->
+   <link th:href="@{/css/responsive.css}" rel="stylesheet" />
     <style>
         /* Remove default styles of anchor tags */
         a {
@@ -80,15 +101,19 @@
     </style>
 </head>
 <body>
+    <div th:replace="adminNavbar :: adminNavbar"></div>
     <!-- Anchor tags -->
-    <nav class="underline">
-        <a th:href="@{/ProductsCategory2/Fast%20Food}">Fast Food</a>
-        <a th:href="@{/ProductsCategory2/Desi%20Food}">Desi Food</a>
-        <a th:href="@{/ProductsCategory2/Cold%20Drinks}">Cold Drinks</a>
-        <a th:href="@{/ProductsCategory2/Hot%20Drinks}">Hot Drinks</a>
-        <a th:href="@{/CreateProduct}" class="mar2 text-center">ADD</a>
-
-
+    <nav class="d-flex w-100 justify-content-between">
+        <nav class="underline justify-content-center mx-auto">
+            <a th:href="@{/ProductsCategory2/Fast%20Food}">Fast Food</a>
+            <a th:href="@{/ProductsCategory2/Desi%20Food}">Desi Food</a>
+            <a th:href="@{/ProductsCategory2/Cold%20Drinks}">Cold Drinks</a>
+            <a th:href="@{/ProductsCategory2/Hot%20Drinks}">Hot Drinks</a>
+        </nav>
+        <nav>
+            <a th:href="@{/CreateProduct}" style="color: yellow">ADD</a>
+    
+        </nav>
     </nav>
     <h1 class="text-center margi" th:text="${productCategory}"></h1>
     <hr>
