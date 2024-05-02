@@ -47,11 +47,12 @@ public class OrderController {
     private UserRepository userRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository, ProductService productService,ProductRepository productRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, ProductService productService,ProductRepository productRepository, CartRepository cartRepository) {
         this.orderRepository = orderRepository;
         this.productService = productService;
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
 
     }
 

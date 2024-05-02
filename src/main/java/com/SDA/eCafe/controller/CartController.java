@@ -27,7 +27,6 @@ import java.util.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 //@RestController
 @Controller
 @RequestMapping("/")
@@ -42,45 +41,42 @@ public class CartController {
 
     @GetMapping("/cart")
     public String getCartItemsByUserId(Model model, HttpServletRequest request) {
-        try{
-                // GET USER ID FROM COOKIES
-                Integer userId = null;
-                Cookie[] cookies = request.getCookies();
-                if (cookies != null) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("userId")) {
-                            userId = Integer.parseInt(cookie.getValue());
-                            break;
-                        }
+        try {
+            // GET USER ID FROM COOKIES
+            Integer userId = null;
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("userId")) {
+                        userId = Integer.parseInt(cookie.getValue());
+                        break;
                     }
                 }
+            }
+            // GET CART ITEMS WITH PRODUCTS BASED ON USER ID
+            if (userId != null) {
+                List<Object[]> cartWithProducts = cartRepository.findCartOfProductByUserId(userId);
+                List<Cart> cartItems = new ArrayList<>();
+                List<Product> products = new ArrayList<>();
 
-                
-                // GET CART ITEMS WITH PRODUCTS BASED ON USER ID
-                if (userId != null) {
-                    List<Object[]> cartWithProducts = cartRepository.findCartOfProductByUserId(userId);
-                    List<Cart> cartItems = new ArrayList<>();
-                    List<Product> products = new ArrayList<>();
-                    
-                    // Variable to send totalprice for items in cart
-                    Integer TotalPrice = 0;
+                // Variable to send totalprice for items in cart
+                Integer TotalPrice = 0;
 
-                    for (Object[] result : cartWithProducts) {
-                        Cart cartItem = (Cart) result[0];
-                        Product product = (Product) result[1];
-                        TotalPrice += product.getPrice() * cartItem.getQuantity();
-                        cartItems.add(cartItem);
-                        products.add(product);
-                    }
-                    model.addAttribute("products", products);
-                    model.addAttribute("cartItems", cartItems);
-                    model.addAttribute("TotalPrice", TotalPrice);
-                } else {
-                    return "redirect:/login";
+                for (Object[] result : cartWithProducts) {
+                    Cart cartItem = (Cart) result[0];
+                    Product product = (Product) result[1];
+                    TotalPrice += product.getPrice() * cartItem.getQuantity();
+                    cartItems.add(cartItem);
+                    products.add(product);
                 }
-                return "Cart";
-        }
-        catch (Exception error) {
+                model.addAttribute("products", products);
+                model.addAttribute("cartItems", cartItems);
+                model.addAttribute("TotalPrice", TotalPrice);
+            } else {
+                return "redirect:/login";
+            }
+            return "Cart";
+        } catch (Exception error) {
             System.out.println(error);
             return "error";
         }
@@ -101,7 +97,6 @@ public class CartController {
                 }
             }
 
-            
             // DELETE THE PRODUCT FROM THE CART
             if (userId != null) {
                 CartId cartId = new CartId(userId, productId);
@@ -116,9 +111,9 @@ public class CartController {
         }
     }
 
-
     @GetMapping("/updateQuantity")
-    public String updateProductQuantity(@RequestParam(value = "quantity") Integer quantity, @RequestParam(value = "productId") Integer productId, Model model, HttpServletRequest request) {
+    public String updateProductQuantity(@RequestParam(value = "quantity") Integer quantity,
+            @RequestParam(value = "productId") Integer productId, Model model, HttpServletRequest request) {
         try {
             // GET USER ID FROM COOKIES
             Integer userId = null;
@@ -132,7 +127,6 @@ public class CartController {
                 }
             }
 
-            
             // UPDATE THE QUANTITY OF THE PRODUCT
             if (userId != null) {
                 CartId cartId = new CartId(userId, productId);
@@ -152,7 +146,4 @@ public class CartController {
         }
     }
 
-    
-
 }
-

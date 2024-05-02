@@ -3,8 +3,13 @@ package com.SDA.eCafe.controller;
 import com.SDA.eCafe.model.Cart;
 import com.SDA.eCafe.model.Orders;
 import com.SDA.eCafe.model.Product;
+import com.SDA.eCafe.model.User;
 import com.SDA.eCafe.repository.ProductRepository;
+import com.SDA.eCafe.repository.UserRepository;
 import com.SDA.eCafe.service.ProductService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,14 +30,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ProductController {
 
     private ProductRepository productRepository;
+    private UserRepository userRepository;
+
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
+        this.userRepository = userRepository;
     }
 
     @Autowired
     private ProductService productService;
+
+     public String getRoleFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer userId = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userId")) {
+                    userId = Integer.parseInt(cookie.getValue());
+                    break;
+                }
+            }
+            Optional<User> loggedInUser = userRepository.findById(userId);
+            if (!loggedInUser.isEmpty()) {
+                System.out.println(loggedInUser.get().getRole());
+                return loggedInUser.get().getRole();
+            }
+        }
+        return "noUser";
+    }
 
     @GetMapping("/")
     public String getAllProducts(Model model) {
@@ -47,26 +74,33 @@ public class ProductController {
     }
 
     @GetMapping("/analytics")
-    public String showAnalytics(Model model) {
+    public String showAnalytics(Model model, HttpServletRequest request) {
         try {
-            List<Object[]> productsWithTotalSsle = productRepository.getAllProductsWithSale();
-            List<String> productNames = new ArrayList<>();
-            List<Long> productPrices = new ArrayList<>();        
-
-            System.out.println("\n\n\n");
-
-            for (Object[] result : productsWithTotalSsle) {
-                String productName = (String) result[0];
-                Long productPrice = (Long) result[1];
-                productNames.add(productName);
-                productPrices.add(productPrice);
-                System.out.println("----------------------------------");
-                System.out.println(productName +" "+ productPrice);
+            if ("Admin".equals(getRoleFromCookies(request))|| "Manager".equals(getRoleFromCookies(request))) {
+                List<Object[]> productsWithTotalSsle = productRepository.getAllProductsWithSale();
+                List<String> productNames = new ArrayList<>();
+                List<Long> productPrices = new ArrayList<>();        
+    
+                System.out.println("\n\n\n");
+    
+                for (Object[] result : productsWithTotalSsle) {
+                    String productName = (String) result[0];
+                    Long productPrice = (Long) result[1];
+                    productNames.add(productName);
+                    productPrices.add(productPrice);
+                    System.out.println("----------------------------------");
+                    System.out.println(productName +" "+ productPrice);
+                }
+                String role = getRoleFromCookies(request);
+                model.addAttribute("role", role);
+                model.addAttribute("productNames", productNames);
+                model.addAttribute("productPrices", productPrices);
+                System.out.println("\n\n\n");
+                return "analytics";
             }
-            model.addAttribute("productNames", productNames);
-            model.addAttribute("productPrices", productPrices);
-            System.out.println("\n\n\n");
-            return "analytics";
+            else{
+                return "redirect:/login";
+            }
         } catch (Exception error) {
             System.out.println(error.getMessage());
             System.out.println("\n\n\n");

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, CartId> {
-     @Query("SELECT c, p FROM Cart c JOIN Product p ON c.ProductId = p.ID WHERE c.UserId = :userId")
+    @Query("SELECT c, p FROM Cart c JOIN Product p ON c.ProductId = p.ID WHERE c.UserId = :userId")
     List<Object[]> findCartOfProductByUserId(@Param("userId") Integer userId);
 
     @Modifying

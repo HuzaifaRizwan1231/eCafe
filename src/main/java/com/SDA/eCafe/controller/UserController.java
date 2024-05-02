@@ -140,6 +140,8 @@ public class UserController {
             @RequestParam String email, @RequestParam String password,
             @RequestParam String address, Model model, HttpServletRequest request) {
         if ("Admin".equals(getRoleFromCookies(request))) {
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             try {
                 User user = new User();
                 user.setName(name);
@@ -150,7 +152,7 @@ public class UserController {
                 user.setRole("Manager");
                 userRepository.save(user);
                 model.addAttribute("error", "Successfull!");
-                return "Manager";
+                return "addManager";
             } catch (Exception e) {
                 model.addAttribute("error", "Something went wrong");
                 return "addManager";
@@ -165,6 +167,8 @@ public class UserController {
             @RequestParam String email, @RequestParam String password,
             @RequestParam String address, Model model, HttpServletRequest request) {
         if ("Admin".equals(getRoleFromCookies(request))) {
+            String role = getRoleFromCookies(request);
+            model.addAttribute("role", role);
             try {
                 User user = new User();
                 user.setName(name);
@@ -189,6 +193,7 @@ public class UserController {
     @GetMapping("/adminpanel/viewAllManagers")
     public String getManagers(Model model, HttpServletRequest request) {
         if ("Admin".equals(getRoleFromCookies(request))) {
+            
             try {
                 List<User> allUsers = userRepository.findAll();
                 List<User> managers = allUsers.stream()
