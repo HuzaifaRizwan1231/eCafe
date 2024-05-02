@@ -22,6 +22,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.Category = ?1")
     List<Product> findByCategory(String category);
 
+    @Query("SELECT p.Name, SUM(o.Quantity*o.ProductPrice) AS TotalSale  FROM Orders o JOIN Product p ON p.ID = o.ProductId WHERE o.Status = 'Completed' GROUP BY o.ProductId")
+    List<Object[]> getAllProductsWithSale();
+
     @Modifying
     @Query("UPDATE Product p SET p.Status = :status WHERE p.ID = :productId")
     int updateProductStatus(@Param("status") String status, @Param("productId") Integer productId);

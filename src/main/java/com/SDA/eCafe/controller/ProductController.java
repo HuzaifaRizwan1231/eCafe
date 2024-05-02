@@ -1,5 +1,7 @@
 package com.SDA.eCafe.controller;
 
+import com.SDA.eCafe.model.Cart;
+import com.SDA.eCafe.model.Orders;
 import com.SDA.eCafe.model.Product;
 import com.SDA.eCafe.repository.ProductRepository;
 import com.SDA.eCafe.service.ProductService;
@@ -42,6 +44,35 @@ public class ProductController {
         } catch (Exception error) {
             return "error";
         }
+    }
+
+    @GetMapping("/analytics")
+    public String showAnalytics(Model model) {
+        try {
+            List<Object[]> productsWithTotalSsle = productRepository.getAllProductsWithSale();
+            List<String> productNames = new ArrayList<>();
+            List<Long> productPrices = new ArrayList<>();        
+
+            System.out.println("\n\n\n");
+
+            for (Object[] result : productsWithTotalSsle) {
+                String productName = (String) result[0];
+                Long productPrice = (Long) result[1];
+                productNames.add(productName);
+                productPrices.add(productPrice);
+                System.out.println("----------------------------------");
+                System.out.println(productName +" "+ productPrice);
+            }
+            model.addAttribute("productNames", productNames);
+            model.addAttribute("productPrices", productPrices);
+            System.out.println("\n\n\n");
+            return "analytics";
+        } catch (Exception error) {
+            System.out.println(error.getMessage());
+            System.out.println("\n\n\n");
+            return "error";
+        }
+        
     }
 
     @GetMapping("/products/search")

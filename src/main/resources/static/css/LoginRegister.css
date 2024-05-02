@@ -21,7 +21,7 @@ body
 .hero{
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(rgba(173, 154, 112, 0.822), rgba(183, 161, 124, 0.4)),url("/images/loginbackground.png");
+  background-image: linear-gradient(rgba(61, 38, 6, 0.822), rgba(49, 39, 20, 0.4)),url("/images/loginbackground.png");
   background-position: center;
   background-size: cover;
   position: absolute;
@@ -31,13 +31,15 @@ body
   height: 540px;
   position: relative;
   margin: 31px auto;
-  background: #f0d2a2;
+  background: #dfdfdf;
   padding: 5px;
   overflow: hidden;
+  border-radius: 10px;
+  border: #de9910;
 }
 
 .Welcome{
-  color: #58441c;
+  color: #333;
   margin: 30px auto;
   text-align: center;
 }
@@ -66,7 +68,7 @@ body
   border-left: 0;
   border-right: 0;
   border-top: 0;
-  border-bottom: 1px solid rgb(133, 83, 17);
+  border-bottom: 1px solid #ab7d07ef;
   outline: none;
   background: transparent;
 }
@@ -79,7 +81,7 @@ select
   border-left: 0;
   border-right: 0;
   border-top: 0;
-  border-bottom: 1px solid rgb(133, 83, 17);
+  border-bottom: 1px solid #ab7d07ef;
   outline: none;
   background: transparent;
 }
@@ -91,23 +93,32 @@ select
   cursor: pointer;
   display: block;
   margin: auto;
-  background: linear-gradient(to right, #e9c67f, #8d6b31);
+  background: linear-gradient(to right, #ce9c1eef, #ab7d07ef);
   border: 0;
   outline: none;
   border-radius: 30px;
 }
-
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  color: rgb(191, 152, 75);
+  font-size: 30px;
+}
+.close:hover {
+  color: #b27d12;
+}
 .check-box{
   margin: 30px 10px 30px 0px;
 }
 
 .register-link{
-  margin-left: 180px ;
+  margin-left: 170px ;
   text-decoration: none;
-  font-size: 14px;
-  color: black;
+  font-size: 13px;
+  color: #ab7d07ef;
   font-style: italic;
-
 }
 
 span{
