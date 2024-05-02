@@ -58,7 +58,7 @@
           th:if="${order.status == 'Pending'}"
         >
           <form th:action="@{/orders/cancel}" method="post">
-            <input type="checkbox" id="confirmationCheckbox" onchange="var checkbox = document.getElementById('confirmationCheckbox');var cancelButton = document.getElementById('cancelButton');cancelButton.disabled = !checkbox.checked;">
+            <input type="checkbox" id="confirmationCheckbox" th:onchange="var checkbox = document.getElementById('confirmationCheckbox');var cancelButton = document.getElementById('cancelButton');cancelButton.disabled = !checkbox.checked;">
             <input type="hidden" name="orderId" th:value="${order.id}" />
             <button type="submit" class="btn btn-danger m-1" id="cancelButton" disabled>Cancel</button>
           </form>

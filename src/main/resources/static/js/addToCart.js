@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
   var addToCartBtn = document.getElementById("addToCartBtn");
 
   addToCartBtn.addEventListener("click", function () {
@@ -39,3 +40,4 @@ document.addEventListener("DOMContentLoaded", function () {
     xhr.send(JSON.stringify(data));
   });
 });
+

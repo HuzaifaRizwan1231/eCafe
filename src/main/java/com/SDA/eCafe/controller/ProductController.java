@@ -100,24 +100,7 @@ public class ProductController {
         return filteredProducts;
     }
 
-    /*@GetMapping("/productDetail")
-    public String getProductDetail(@RequestParam("id") Long id, Model model) {
-        try {
-            Optional<Product> optionalProduct = productRepository.findById(id);
-            if (optionalProduct.isPresent()) {
-                Product product = optionalProduct.get();
-                model.addAttribute("product", product);
-                return "productDetail";
-            } else {
-                // Product not found
-                return "error"; // You might want to return a custom error page or handle it differently
-            }
-        } catch (Exception error) {
-            return "error";
-        }
-    }*/
-
-    @GetMapping("/productdetails/{id}")
+   @GetMapping("/productdetails/{id}")
     public String getProductDetail(@PathVariable("id") int productId, Model model) {
         try {
             Product product = productService.getProductById(productId);
@@ -131,7 +114,7 @@ public class ProductController {
     }
 
 
-    @PostMapping("/product/addToCart")
+ @PostMapping("/product/addToCart")
     public String addToCart(@RequestBody String entity) {
         try {
             System.out.println("agya tu jawan ho kr");
@@ -140,20 +123,6 @@ public class ProductController {
            return "error";
         }
     }
-
-
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        try {
-            return "LoginRegister";
-        }catch(Exception error){
-
-
-            return "error";
-        }
-    }
-
 
 
 
@@ -166,6 +135,5 @@ public class ProductController {
             return "error";
         }
     }
-
 }
 
